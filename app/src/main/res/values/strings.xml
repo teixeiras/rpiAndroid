@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">VirtualKeypad</string>
+    <string name="title_section1">Section 1</string>
+    <string name="title_section2">Section 2</string>
+    <string name="title_section3">Section 3</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="action_example">Example action</string>
+    <string name="action_settings">Settings</string>
+    <string name="server_find_area">Tem duas opções para encontrar o seu raspberrypi. Usando bonjour ou inserindo manualmente o ip. Se o seu raspberry já se encontrar com o dongle de Wifi mas ainda não tiver configurado, o pipplware configura automtáticamente uma rede ad-hoc. Ligue a seu android a esta rede para poder ligar ao serviço.</string>
+    <string name="server_find_manual_ip_label">IP manual</string>
+    <string name="server_find_bonjour">Raspberry Localizados</string>
+    <string name="title_activity_server_find">ServerFind</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="server_find_manual_button_text">Usar server</string>
+    <string name="server_find_manual_port_separator">:</string>
+</resources>
