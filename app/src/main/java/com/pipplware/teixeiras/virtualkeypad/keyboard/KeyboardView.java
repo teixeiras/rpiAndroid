@@ -35,8 +35,6 @@ public class KeyboardView extends android.inputmethodservice.KeyboardView {
 
     public KeyboardView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        mKeyboard = new Keyboard(context, R.xml.keyboard);
-        this.setKeyboard(mKeyboard);
         this.setOnKeyboardActionListener(new Listener());
         this.setPreviewEnabled(false);
     }

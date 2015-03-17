@@ -14,11 +14,23 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+
             <com.github.mikephil.charting.charts.LineChart
                 android:id="@+id/chart"
                 android:layout_width="match_parent"
                 android:layout_height="120dp" />
 
+            <com.github.mikephil.charting.charts.LineChart
+                android:id="@+id/memory"
+                android:layout_width="match_parent"
+                android:layout_height="120dp" />
+
+            <ListView
+                android:id="@+id/processList"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                >
+            </ListView>
         </LinearLayout>
     </ScrollView>
 

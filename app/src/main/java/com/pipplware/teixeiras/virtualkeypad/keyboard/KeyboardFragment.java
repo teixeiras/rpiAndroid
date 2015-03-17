@@ -4,19 +4,18 @@ import android.app.Activity;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.pipplware.teixeiras.virtualkeypad.R;
-
-import java.io.BufferedReader;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.Socket;
 
 
 /**
@@ -24,38 +23,12 @@ import java.net.Socket;
  * Activities that contain this fragment must implement the
  * {@link KeyboardFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link KeyboardFragment#newInstance} factory method to
- * create an instance of this fragment.
  */
 public class KeyboardFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private ViewPager mPager;
+    private PagerAdapter mPagerAdapter;
 
     private OnFragmentInteractionListener mListener;
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment KeyboardFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static KeyboardFragment newInstance(String param1, String param2) {
-        KeyboardFragment fragment = new KeyboardFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     public KeyboardFragment() {
         // Required empty public constructor
@@ -64,10 +37,7 @@ public class KeyboardFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
     }
 
     @Override
@@ -77,11 +47,21 @@ public class KeyboardFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_keyboard, container, false);
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        Spinner spinner = (Spinner) this.getActivity().findViewById(R.id.keyboards_selector);
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this.getActivity(),
+                R.array.keyboards_list, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+
+        mPager = (ViewPager) this.getActivity().findViewById(R.id.pager);
+        mPagerAdapter = new KeyboardSlidePagerAdapter(this.getActivity().getSupportFragmentManager());
+        mPager.setAdapter(mPagerAdapter);
+
     }
 
     @Override
@@ -115,5 +95,27 @@ public class KeyboardFragment extends Fragment {
         // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
     }
+
+    private class KeyboardSlidePagerAdapter extends FragmentStatePagerAdapter {
+        public KeyboardSlidePagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            if (position == 0) {
+                return new KeyboardGamepadFragment();
+            } else {
+                return new KeyboardNormalFragment();
+            }
+
+        }
+
+        @Override
+        public int getCount() {
+            return 2;
+        }
+    }
+
 
 }

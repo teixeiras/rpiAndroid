@@ -17,4 +17,9 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="server_find_manual_button_text">Usar server</string>
     <string name="server_find_manual_port_separator">:</string>
+
+    <string-array name="keyboards_list">
+        <item>Gamepad</item>
+        <item>Teclado</item>
+    </string-array>
 </resources>

@@ -105,6 +105,7 @@ public class PSUtil extends Fragment implements  PSUtilService.CallBack{
         xAxis.setDrawAxisLine(true);
         LineData data = new LineData();
 
+
         ArrayList< ArrayList<Entry> > content = new ArrayList<>();
 
         for (int i = 0; i < processorNumber; i++) {
@@ -123,7 +124,7 @@ public class PSUtil extends Fragment implements  PSUtilService.CallBack{
         int color[] = {Color.RED,Color.GREEN, Color.BLUE, Color.YELLOW};
         int i = 0;
         for (ArrayList<Entry> processorList : content) {
-            LineDataSet set = new LineDataSet(processorList, "Processor " + i +1);
+            LineDataSet set = new LineDataSet(processorList, "Processor " + (i +1));
             set.setColor(color[i]);
             set.setDrawCubic(true);
             set.setCubicIntensity(0.2f);
@@ -131,6 +132,7 @@ public class PSUtil extends Fragment implements  PSUtilService.CallBack{
             set.setDrawCircles(false);
             set.setFillColor(color[i]);
             data.addDataSet(set);
+            i++;
         }
 
         chart.setData(data);

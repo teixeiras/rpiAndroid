@@ -82,7 +82,10 @@ public class PSUtilService extends Service
 
     public void onJSonRequestResponse(JSonRequest<PS> request, PS response) {
         processorLoadList.add(response.getCpu_percent());
-        this.callBack.processorStatUpdate(response.getNumber_of_processors(), processorLoadList);
+        if (this.callBack != null) {
+            this.callBack.processorStatUpdate(response.getNumber_of_processors(), processorLoadList);
+        }
+
     }
 
     public void jsonRequesFailed(JSonRequest<PS> request) {
