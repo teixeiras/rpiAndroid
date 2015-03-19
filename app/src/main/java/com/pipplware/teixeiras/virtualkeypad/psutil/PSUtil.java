@@ -19,6 +19,7 @@ import android.widget.ListView;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
@@ -97,13 +98,16 @@ public class PSUtil extends Fragment implements  PSUtilService.CallBack{
         final LineChart chart = (LineChart) this.getActivity().findViewById(R.id.chart);
 
         XAxis xAxis = chart.getXAxis();
-        xAxis.setDrawGridLines(true);
+
+        xAxis.setDrawGridLines(false);
         xAxis.setAdjustXLabels(true);
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setTextSize(10f);
         xAxis.setTextColor(Color.RED);
-        xAxis.setDrawAxisLine(true);
-        LineData data = new LineData();
+        xAxis.setDrawAxisLine(false);
+
+        YAxis leftAxis = chart.getAxisLeft();
+        leftAxis.setDrawAxisLine(false);
 
 
         ArrayList< ArrayList<Entry> > content = new ArrayList<>();
@@ -119,26 +123,35 @@ public class PSUtil extends Fragment implements  PSUtilService.CallBack{
 
         }
 
-        data.clearValues();
+        ArrayList<String> xVals = new ArrayList<String>();
+        for (int i =0; i< content.get(0).size(); i++) {
+            xVals.add("");
+        }
+
+        final LineData data = new LineData(xVals);
 
         int color[] = {Color.RED,Color.GREEN, Color.BLUE, Color.YELLOW};
         int i = 0;
         for (ArrayList<Entry> processorList : content) {
             LineDataSet set = new LineDataSet(processorList, "Processor " + (i +1));
             set.setColor(color[i]);
-            set.setDrawCubic(true);
-            set.setCubicIntensity(0.2f);
-            //set1.setDrawFilled(true);
+            set.setLineWidth(2.0f);
             set.setDrawCircles(false);
             set.setFillColor(color[i]);
             data.addDataSet(set);
             i++;
         }
 
-        chart.setData(data);
+
         this.getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                if (chart.getData()!=null) {
+                    chart.clearValues();
+                }
+
+                chart.setData(data);
+
                 chart.invalidate();
             }
         });

@@ -24,7 +24,7 @@ public class KeyboardGamepadFragment extends  android.support.v4.app.Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        Keyboard mKeyboard = new Keyboard(this.getActivity(), R.xml.keyboard);
+        Keyboard mKeyboard = new Keyboard(this.getActivity(), R.xml.gamepad);
         KeyboardView keyboardView = (KeyboardView) this.getActivity().findViewById(R.id.keyboard_gamepad);
         keyboardView.setKeyboard(mKeyboard);
 

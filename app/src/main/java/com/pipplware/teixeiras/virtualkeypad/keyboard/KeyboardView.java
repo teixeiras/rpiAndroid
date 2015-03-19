@@ -2,12 +2,14 @@ package com.pipplware.teixeiras.virtualkeypad.keyboard;
 
 import android.content.Context;
 import android.inputmethodservice.Keyboard;
+import android.net.Network;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.widget.Toast;
 
 import com.pipplware.teixeiras.virtualkeypad.MainActivity;
 import com.pipplware.teixeiras.virtualkeypad.R;
+import com.pipplware.teixeiras.virtualkeypad.network.NetworkRequest;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -62,35 +64,10 @@ public class KeyboardView extends android.inputmethodservice.KeyboardView {
         }
 
         private void onKeyboardKeyTouch(final String message) {
-            new Thread() {
+            List<NameValuePair> nameValuePairs = new ArrayList<>(1);
+            nameValuePairs.add(new BasicNameValuePair("key", message));
 
-                @Override
-                public void run() {
-                    HttpClient httpclient = new DefaultHttpClient();
-                    String address = "http://" + MainActivity.ip;
-                    if (MainActivity.port != null) {
-                        address += ":" + MainActivity.port;
-                    }
-                    HttpPost httppost = new HttpPost(address + "/key");
-
-                    try {
-                        // Add your data
-                        List<NameValuePair> nameValuePairs = new ArrayList<>(1);
-                        nameValuePairs.add(new BasicNameValuePair("key", message));
-
-                        httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-
-                        // Execute HTTP Post Request
-                        HttpResponse response = httpclient.execute(httppost);
-
-                    } catch (ClientProtocolException e) {
-                        e.printStackTrace();
-                    } catch (IOException e) {
-
-                        e.printStackTrace();
-                    }
-                }
-            }.start();
+            NetworkRequest.makeRequest("key", nameValuePairs);
         }
 
         @Override

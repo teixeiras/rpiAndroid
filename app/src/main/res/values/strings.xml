@@ -17,6 +17,12 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="server_find_manual_button_text">Usar server</string>
     <string name="server_find_manual_port_separator">:</string>
+    <string name="reboot_rpi">Reboot</string>
+    <string name="boot_to_emulation_failover_xbmc">ES (failover XBMC)</string>
+    <string name="boot_to_emulation_center">ES</string>
+    <string name="boot_to_xbmc">XBMC</string>
+    <string name="boot_to_xfce">XFCE</string>
+    <string name="terminal">Terminal</string>
 
     <string-array name="keyboards_list">
         <item>Gamepad</item>

@@ -25,7 +25,7 @@ public class KeyboardNormalFragment extends Fragment{
     @Override
     public void onResume() {
         super.onResume();
-        Keyboard mKeyboard = new Keyboard(this.getActivity(), R.xml.kbd_compact_fn);
+        Keyboard mKeyboard = new Keyboard(this.getActivity(), R.xml.keyboard);
         KeyboardView keyboardView = (KeyboardView) this.getActivity().findViewById(R.id.keyboard_normal);
         keyboardView.setKeyboard(mKeyboard);
 

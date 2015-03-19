@@ -82,6 +82,8 @@ public class PSUtilService extends Service
 
     public void onJSonRequestResponse(JSonRequest<PS> request, PS response) {
         processorLoadList.add(response.getCpu_percent());
+        if (processorLoadList.size() > 8)
+        processorLoadList = processorLoadList.subList(processorLoadList.size() -8, processorLoadList.size()-1);
         if (this.callBack != null) {
             this.callBack.processorStatUpdate(response.getNumber_of_processors(), processorLoadList);
         }
