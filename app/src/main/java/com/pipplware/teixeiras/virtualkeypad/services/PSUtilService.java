@@ -24,13 +24,16 @@ import javax.jmdns.JmDNS;
 public class PSUtilService extends Service
         implements JSonRequest.JSonRequestCallback<PS> {
 
+    public enum MemoryEnum{ TOTAL, AVAILABLE, PERCENT, USED, FREE, ACTIVE, INACTIVE, BUFFERS, CACHED};
+    public enum SwapEnum{ TOTAL, USED, FREE, PERCENT, SIN, SOUT}
+
+
 
     private final IBinder mBinder = new LocalBinder();
     private static Timer timer = new Timer();
 
     public interface CallBack {
-        void processorStatUpdate(int processorNumber, List< ArrayList<String> > values);
-        void memoryStatUpdate(List<Integer> values);
+        public void update(int processorNumber, List<ArrayList<String>> cpuLoading, List<String> values, List<String> swap);
     }
 
     public void setCallBack(CallBack callBack) {
@@ -39,6 +42,8 @@ public class PSUtilService extends Service
 
     private CallBack callBack;
     List< ArrayList<String> > processorLoadList = new ArrayList<>();
+
+
     public PSUtilService() {
     }
 
@@ -90,8 +95,10 @@ public class PSUtilService extends Service
         if (processorLoadList.size() > 8)
         processorLoadList = processorLoadList.subList(processorLoadList.size() -8, processorLoadList.size()-1);
         if (this.callBack != null) {
-            this.callBack.processorStatUpdate(response.getNumber_of_processors(), processorLoadList);
+            this.callBack.update(response.getNumber_of_processors(), processorLoadList, response.getMemory(), response.getSwap());
+
         }
+
 
     }
 

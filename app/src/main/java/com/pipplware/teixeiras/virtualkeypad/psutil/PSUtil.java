@@ -13,23 +13,22 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 
-import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.components.YAxis;
-import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.LineData;
-import com.github.mikephil.charting.data.LineDataSet;
 import com.pipplware.teixeiras.virtualkeypad.R;
 import com.pipplware.teixeiras.virtualkeypad.network.NetworkRequest;
-import com.pipplware.teixeiras.virtualkeypad.services.NDSService;
 import com.pipplware.teixeiras.virtualkeypad.services.PSUtilService;
 
+import org.achartengine.ChartFactory;
+import org.achartengine.GraphicalView;
+import org.achartengine.chart.PointStyle;
+import org.achartengine.model.XYMultipleSeriesDataset;
+import org.achartengine.model.XYSeries;
+import org.achartengine.renderer.XYMultipleSeriesRenderer;
+import org.achartengine.renderer.XYSeriesRenderer;
 import org.apache.http.NameValuePair;
 
 import java.util.ArrayList;
@@ -126,75 +125,64 @@ public class PSUtil extends Fragment implements PSUtilService.CallBack {
         mListener = null;
     }
 
-    @Override
-    public void processorStatUpdate(int processorNumber, List<ArrayList<String>> values) {
-        final LineChart chart = (LineChart) this.getActivity().findViewById(R.id.chart);
 
-        XAxis xAxis = chart.getXAxis();
+    public void update(int processorNumber, List<ArrayList<String>> cpuLoading, List<String> values, List<String> swap) {
+        ArrayList<XYSeries> processorsSeries = new ArrayList<>();
+        for (int i = 0; i < processorNumber; i++) {
+            processorsSeries.add(new XYSeries("Processor " + (i + 1)));
+        }
 
-        xAxis.setDrawGridLines(false);
-        xAxis.setAdjustXLabels(true);
-        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        xAxis.setTextSize(10f);
-        xAxis.setTextColor(Color.RED);
-        xAxis.setDrawAxisLine(false);
-
-        YAxis leftAxis = chart.getAxisLeft();
-        leftAxis.setDrawAxisLine(false);
-
-
-        ArrayList<ArrayList<Entry>> content = new ArrayList<>();
 
         for (int i = 0; i < processorNumber; i++) {
-            ArrayList<Entry> list = new ArrayList<>();
-            content.add(list);
             int iteration = 0;
-            for (ArrayList<String> processor_iteration : values) {
+            for (ArrayList<String> processor_iteration : cpuLoading) {
                 String value = processor_iteration.get(i);
-                list.add(new Entry(Float.valueOf(value), iteration++));
+                processorsSeries.get(i).add(iteration, Float.valueOf(value));
+                iteration++;
             }
 
         }
+        final XYMultipleSeriesRenderer mRenderer = new XYMultipleSeriesRenderer();
 
-        ArrayList<String> xVals = new ArrayList<String>();
-        for (int i = 0; i < content.get(0).size(); i++) {
-            xVals.add("");
-        }
+        final XYMultipleSeriesDataset dataset = new XYMultipleSeriesDataset();
 
-        final LineData data = new LineData(xVals);
-
-        int color[] = {Color.RED, Color.GREEN, Color.BLUE, Color.YELLOW};
-        int i = 0;
-        for (ArrayList<Entry> processorList : content) {
-            LineDataSet set = new LineDataSet(processorList, "Processor " + (i + 1));
-            set.setColor(color[i]);
-            set.setLineWidth(2.0f);
-            set.setDrawCircles(false);
-            set.setFillColor(color[i]);
-            data.addDataSet(set);
-            i++;
+        int colors[] = {Color.RED, Color.GREEN, Color.BLUE, Color.DKGRAY};
+        for (int i = 0; i < processorNumber; i++) {
+            dataset.addSeries(processorsSeries.get(i));
+            XYSeriesRenderer renderer = new XYSeriesRenderer();
+            renderer.setLineWidth(2);
+            renderer.setColor(colors[i]);
+            renderer.setDisplayBoundingPoints(true);
+            renderer.setPointStyle(PointStyle.CIRCLE);
+            renderer.setPointStrokeWidth(3);
+            mRenderer.addSeriesRenderer(renderer);
         }
 
 
-        this.getActivity().runOnUiThread(new Runnable() {
+
+
+        mRenderer.setMarginsColor(Color.argb(0x00, 0xff, 0x00, 0x00)); // transparent margins
+        mRenderer.setPanEnabled(false, false);
+        mRenderer.setYAxisMax(35);
+        mRenderer.setYAxisMin(0);
+        mRenderer.setShowGrid(true); // we show the grid
+        PSUtil.this.getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if (chart.getData() != null) {
-                    chart.clearValues();
+                try {
+                    GraphicalView chartView = ChartFactory.getLineChartView(getActivity(), dataset, mRenderer);
+
+                    LinearLayout chartLyt = (LinearLayout) getActivity().findViewById(R.id.chart);
+                    chartLyt.addView(chartView, 0);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-
-                chart.setData(data);
-
-                chart.invalidate();
             }
         });
 
     }
 
-    @Override
-    public void memoryStatUpdate(List<Integer> values) {
-
-    }
 
     public void reboot(View v) {
         NetworkRequest.makeRequest("/mode/reboot", new ArrayList<NameValuePair>());

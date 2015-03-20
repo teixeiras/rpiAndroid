@@ -26,15 +26,12 @@
                 android:text="@string/command_execute"
                 />
 
-            <com.github.mikephil.charting.charts.LineChart
+
+            <LinearLayout
                 android:id="@+id/chart"
                 android:layout_width="match_parent"
-                android:layout_height="120dp" />
-
-            <com.github.mikephil.charting.charts.LineChart
-                android:id="@+id/memory"
-                android:layout_width="match_parent"
-                android:layout_height="120dp" />
+                android:layout_height="120dp"
+                android:orientation="vertical"/>
 
             <ListView
                 android:id="@+id/processList"
