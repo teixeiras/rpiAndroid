@@ -15,7 +15,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.Spinner;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
@@ -24,8 +26,11 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.pipplware.teixeiras.virtualkeypad.R;
+import com.pipplware.teixeiras.virtualkeypad.network.NetworkRequest;
 import com.pipplware.teixeiras.virtualkeypad.services.NDSService;
 import com.pipplware.teixeiras.virtualkeypad.services.PSUtilService;
+
+import org.apache.http.NameValuePair;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +41,7 @@ import java.util.List;
  * {@link PSUtil.OnFragmentInteractionListener} interface
  * to handle interaction events.
  */
-public class PSUtil extends Fragment implements  PSUtilService.CallBack{
+public class PSUtil extends Fragment implements PSUtilService.CallBack {
 
     private PSUtilService mService;
     private boolean mBound = false;
@@ -63,16 +68,44 @@ public class PSUtil extends Fragment implements  PSUtilService.CallBack{
         return inflater.inflate(R.layout.fragment_psutil, container, false);
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-
     @Override
     public void onResume() {
         super.onResume();
+
+
+        final Spinner spinner = (Spinner) this.getActivity().findViewById(R.id.command_selector);
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this.getActivity(),
+                R.array.command_list, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(adapter);
+
+        Button btn = (Button) getActivity().findViewById(R.id.command_accept);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                switch (spinner.getSelectedItemPosition()) {
+                    case 0:
+                        reboot(view);
+                        break;
+                    case 1:
+                        both(view);
+                        break;
+                    case 2:
+                        emulation(view);
+                        break;
+                    case 3:
+                        kodi(view);
+                        break;
+                    case 4:
+                        xfce(view);
+                        break;
+                    case 5:
+                        terminal(view);
+                        break;
+                }
+            }
+        });
 
     }
 
@@ -110,7 +143,7 @@ public class PSUtil extends Fragment implements  PSUtilService.CallBack{
         leftAxis.setDrawAxisLine(false);
 
 
-        ArrayList< ArrayList<Entry> > content = new ArrayList<>();
+        ArrayList<ArrayList<Entry>> content = new ArrayList<>();
 
         for (int i = 0; i < processorNumber; i++) {
             ArrayList<Entry> list = new ArrayList<>();
@@ -118,22 +151,22 @@ public class PSUtil extends Fragment implements  PSUtilService.CallBack{
             int iteration = 0;
             for (ArrayList<String> processor_iteration : values) {
                 String value = processor_iteration.get(i);
-                list.add(new Entry(Float.valueOf(value),iteration++));
+                list.add(new Entry(Float.valueOf(value), iteration++));
             }
 
         }
 
         ArrayList<String> xVals = new ArrayList<String>();
-        for (int i =0; i< content.get(0).size(); i++) {
+        for (int i = 0; i < content.get(0).size(); i++) {
             xVals.add("");
         }
 
         final LineData data = new LineData(xVals);
 
-        int color[] = {Color.RED,Color.GREEN, Color.BLUE, Color.YELLOW};
+        int color[] = {Color.RED, Color.GREEN, Color.BLUE, Color.YELLOW};
         int i = 0;
         for (ArrayList<Entry> processorList : content) {
-            LineDataSet set = new LineDataSet(processorList, "Processor " + (i +1));
+            LineDataSet set = new LineDataSet(processorList, "Processor " + (i + 1));
             set.setColor(color[i]);
             set.setLineWidth(2.0f);
             set.setDrawCircles(false);
@@ -146,7 +179,7 @@ public class PSUtil extends Fragment implements  PSUtilService.CallBack{
         this.getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if (chart.getData()!=null) {
+                if (chart.getData() != null) {
                     chart.clearValues();
                 }
 
@@ -162,6 +195,31 @@ public class PSUtil extends Fragment implements  PSUtilService.CallBack{
     public void memoryStatUpdate(List<Integer> values) {
 
     }
+
+    public void reboot(View v) {
+        NetworkRequest.makeRequest("/mode/reboot", new ArrayList<NameValuePair>());
+    }
+
+    public void both(View v) {
+        NetworkRequest.makeRequest("/mode/both", new ArrayList<NameValuePair>());
+    }
+
+    public void emulation(View v) {
+        NetworkRequest.makeRequest("/mode/emulation", new ArrayList<NameValuePair>());
+    }
+
+    public void kodi(View v) {
+        NetworkRequest.makeRequest("/mode/kodi", new ArrayList<NameValuePair>());
+    }
+
+    public void xfce(View v) {
+        NetworkRequest.makeRequest("/mode/xfce", new ArrayList<NameValuePair>());
+    }
+
+    public void terminal(View v) {
+        NetworkRequest.makeRequest("/mode/terminal", new ArrayList<NameValuePair>());
+    }
+
 
     /**
      * This interface must be implemented by activities that contain this

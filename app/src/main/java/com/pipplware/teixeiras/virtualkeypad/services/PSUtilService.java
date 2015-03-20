@@ -75,7 +75,12 @@ public class PSUtilService extends Service
     private class RequestHandler extends TimerTask{
         @Override
         public void run() {
-            new JSonRequest<>(PSUtilService.this,PS.class,  "http://"+ MainActivity.ip+":"+MainActivity.port+"/info");
+            try{
+                new JSonRequest<>(PSUtilService.this,PS.class,  "http://"+ MainActivity.ip+":"+MainActivity.port+"/info");
+            }catch (Exception e) {
+
+            }
+
 
         }
     }

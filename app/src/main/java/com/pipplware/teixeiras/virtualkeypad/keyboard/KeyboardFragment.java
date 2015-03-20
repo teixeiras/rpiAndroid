@@ -2,6 +2,7 @@ package com.pipplware.teixeiras.virtualkeypad.keyboard;
 
 import android.app.Activity;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -58,10 +59,22 @@ public class KeyboardFragment extends Fragment {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
 
-        mPager = (ViewPager) this.getActivity().findViewById(R.id.pager);
-        mPagerAdapter = new KeyboardSlidePagerAdapter(this.getActivity().getSupportFragmentManager());
-        mPager.setAdapter(mPagerAdapter);
+        mPager = (ViewPager) this.getActivity().findViewById(R.id.keyboard_pager);
+        mPagerAdapter = new KeyboardSlidePagerAdapter(getChildFragmentManager());
+        new setAdapterTask().execute();
 
+
+    }
+
+    private class setAdapterTask extends AsyncTask<Void, Void, Void> {
+        protected Void doInBackground(Void... params) {
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            mPager.setAdapter(mPagerAdapter);
+        }
     }
 
     @Override
@@ -73,7 +86,7 @@ public class KeyboardFragment extends Fragment {
             throw new ClassCastException(activity.toString()
                     + " must implement OnFragmentInteractionListener");
         }
-         }
+    }
 
     @Override
     public void onDetach() {

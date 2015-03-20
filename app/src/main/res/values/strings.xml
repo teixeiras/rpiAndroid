@@ -1,31 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">VirtualKeypad</string>
-    <string name="title_section1">Section 1</string>
-    <string name="title_section2">Section 2</string>
-    <string name="title_section3">Section 3</string>
+    <string name="app_name">PiPPlware</string>
+    <string name="title_section1">Keyboard</string>
+    <string name="title_section2">Stats</string>
+    <string name="title_section3">Torrents</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_example">Example action</string>
     <string name="action_settings">Settings</string>
     <string name="server_find_area">Tem duas opções para encontrar o seu raspberrypi. Usando bonjour ou inserindo manualmente o ip. Se o seu raspberry já se encontrar com o dongle de Wifi mas ainda não tiver configurado, o pipplware configura automtáticamente uma rede ad-hoc. Ligue a seu android a esta rede para poder ligar ao serviço.</string>
     <string name="server_find_manual_ip_label">IP manual</string>
-    <string name="server_find_bonjour">Raspberry Localizados</string>
+    <string name="server_find_bonjour">Raspberry Found</string>
     <string name="title_activity_server_find">ServerFind</string>
     <string name="hello_world">Hello world!</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="server_find_manual_button_text">Usar server</string>
+    <string name="server_find_manual_button_text">Connect</string>
     <string name="server_find_manual_port_separator">:</string>
     <string name="reboot_rpi">Reboot</string>
-    <string name="boot_to_emulation_failover_xbmc">ES (failover XBMC)</string>
-    <string name="boot_to_emulation_center">ES</string>
-    <string name="boot_to_xbmc">XBMC</string>
-    <string name="boot_to_xfce">XFCE</string>
-    <string name="terminal">Terminal</string>
+    <string name="boot_to_emulation_failover_xbmc">Default to ES (failover XBMC)</string>
+    <string name="boot_to_emulation_center">Default to Emulation Server</string>
+    <string name="boot_to_xbmc">Default to Kodi</string>
+    <string name="boot_to_xfce">Default to XFCE</string>
+    <string name="terminal">Default to Terminal</string>
+    <string name="server_find_manual_ip_title">Server Address</string>
+    <string name="server_find_manual_server">Manual IP</string>
 
     <string-array name="keyboards_list">
         <item>Gamepad</item>
         <item>Teclado</item>
     </string-array>
+
+    <string-array name="command_list">
+        <item>@string/reboot_rpi</item>
+        <item>@string/boot_to_emulation_failover_xbmc</item>
+        <item>@string/boot_to_emulation_center</item>
+        <item>@string/boot_to_xbmc</item>
+        <item>@string/boot_to_xfce</item>
+        <item>@string/terminal</item>
+    </string-array>
+    <string name="title_activity_main_activity2">MainActivity2</string>
+    <string name="command_execute">Executar</string>
+
 </resources>
