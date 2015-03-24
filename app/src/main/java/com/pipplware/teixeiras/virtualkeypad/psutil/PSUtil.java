@@ -24,6 +24,8 @@ import com.pipplware.teixeiras.virtualkeypad.services.PSUtilService;
 
 import org.achartengine.ChartFactory;
 import org.achartengine.GraphicalView;
+import org.achartengine.chart.CombinedXYChart;
+import org.achartengine.chart.LineChart;
 import org.achartengine.chart.PointStyle;
 import org.achartengine.model.XYMultipleSeriesDataset;
 import org.achartengine.model.XYSeries;
@@ -126,7 +128,70 @@ public class PSUtil extends Fragment implements PSUtilService.CallBack {
     }
 
 
-    public void update(int processorNumber, List<ArrayList<String>> cpuLoading, List<String> values, List<String> swap) {
+    public void update(int processorNumber, List<List<String>> cpuLoading, List<List<String>> memoryList) {
+        final XYMultipleSeriesRenderer mRenderer1 = new XYMultipleSeriesRenderer();
+
+        final XYMultipleSeriesDataset dataset1 = new XYMultipleSeriesDataset();
+
+        XYSeries memory = new XYSeries("Memory");
+        XYSeries swap = new XYSeries("Swap");
+        int iterator = 0;
+        for (List<String> memoryEntry : memoryList) {
+            memory.add(iterator ,Float.parseFloat(memoryEntry.get(0)));
+            swap.add(iterator ,Float.parseFloat(memoryEntry.get(1)));
+            iterator++;
+        }
+
+        dataset1.addSeries(memory);
+        dataset1.addSeries(swap);
+
+        XYSeriesRenderer rendererMemory = new XYSeriesRenderer();
+        rendererMemory.setColor(Color.RED);
+        rendererMemory.setLineWidth(2);
+        rendererMemory.setDisplayBoundingPoints(true);
+        rendererMemory.setPointStyle(PointStyle.CIRCLE);
+        rendererMemory.setPointStrokeWidth(3);
+        mRenderer1.addSeriesRenderer(rendererMemory);
+
+        XYSeriesRenderer swapMemory = new XYSeriesRenderer();
+        swapMemory.setColor(Color.GREEN);
+        swapMemory.setLineWidth(2);
+        swapMemory.setDisplayBoundingPoints(true);
+        swapMemory.setPointStyle(PointStyle.CIRCLE);
+        swapMemory.setPointStrokeWidth(3);
+
+        mRenderer1.addSeriesRenderer(swapMemory);
+        mRenderer1.setYAxisMax(100);
+        mRenderer1.setMarginsColor(Color.argb(0x00, 0xff, 0x00, 0x00)); // transparent margins
+
+
+
+        PSUtil.this.getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+
+                    CombinedXYChart.XYCombinedChartDef[] types = new CombinedXYChart.XYCombinedChartDef[] {
+                            new CombinedXYChart.XYCombinedChartDef(LineChart.TYPE, 0,1 )
+                    };
+
+
+
+                    GraphicalView chartView =  ChartFactory.getCombinedXYChartView(getActivity(), dataset1, mRenderer1, types);
+
+                    LinearLayout chartLyt = (LinearLayout) getActivity().findViewById(R.id.memory);
+                    chartLyt.addView(chartView, 0);
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        final XYMultipleSeriesRenderer mRenderer = new XYMultipleSeriesRenderer();
+
+        final XYMultipleSeriesDataset dataset = new XYMultipleSeriesDataset();
+
         ArrayList<XYSeries> processorsSeries = new ArrayList<>();
         for (int i = 0; i < processorNumber; i++) {
             processorsSeries.add(new XYSeries("Processor " + (i + 1)));
@@ -135,16 +200,13 @@ public class PSUtil extends Fragment implements PSUtilService.CallBack {
 
         for (int i = 0; i < processorNumber; i++) {
             int iteration = 0;
-            for (ArrayList<String> processor_iteration : cpuLoading) {
+            for (List<String> processor_iteration : cpuLoading) {
                 String value = processor_iteration.get(i);
                 processorsSeries.get(i).add(iteration, Float.valueOf(value));
                 iteration++;
             }
 
         }
-        final XYMultipleSeriesRenderer mRenderer = new XYMultipleSeriesRenderer();
-
-        final XYMultipleSeriesDataset dataset = new XYMultipleSeriesDataset();
 
         int colors[] = {Color.RED, Color.GREEN, Color.BLUE, Color.DKGRAY};
         for (int i = 0; i < processorNumber; i++) {
@@ -158,19 +220,31 @@ public class PSUtil extends Fragment implements PSUtilService.CallBack {
             mRenderer.addSeriesRenderer(renderer);
         }
 
-
-
-
         mRenderer.setMarginsColor(Color.argb(0x00, 0xff, 0x00, 0x00)); // transparent margins
         mRenderer.setPanEnabled(false, false);
         mRenderer.setYAxisMax(35);
         mRenderer.setYAxisMin(0);
         mRenderer.setShowGrid(true); // we show the grid
+
+
+      /*  memoryRenderer .setXLabels(0);
+        memoryRenderer .addXTextLabel(0, "Used Memory %");
+        memoryRenderer .addXTextLabel(1, "Used Swap %");
+*/
+
+
+
         PSUtil.this.getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    GraphicalView chartView = ChartFactory.getLineChartView(getActivity(), dataset, mRenderer);
+
+                    CombinedXYChart.XYCombinedChartDef[] types = new CombinedXYChart.XYCombinedChartDef[] {
+                            new CombinedXYChart.XYCombinedChartDef(LineChart.TYPE, 0,1,2,3)};
+
+
+
+                    GraphicalView chartView =  ChartFactory.getCombinedXYChartView(getActivity(), dataset, mRenderer, types);
 
                     LinearLayout chartLyt = (LinearLayout) getActivity().findViewById(R.id.chart);
                     chartLyt.addView(chartView, 0);
@@ -185,27 +259,27 @@ public class PSUtil extends Fragment implements PSUtilService.CallBack {
 
 
     public void reboot(View v) {
-        NetworkRequest.makeRequest("/mode/reboot", new ArrayList<NameValuePair>());
+        NetworkRequest.makeRequest("mode/reboot", new ArrayList<NameValuePair>());
     }
 
     public void both(View v) {
-        NetworkRequest.makeRequest("/mode/both", new ArrayList<NameValuePair>());
+        NetworkRequest.makeRequest("mode/both", new ArrayList<NameValuePair>());
     }
 
     public void emulation(View v) {
-        NetworkRequest.makeRequest("/mode/emulation", new ArrayList<NameValuePair>());
+        NetworkRequest.makeRequest("mode/emulation", new ArrayList<NameValuePair>());
     }
 
     public void kodi(View v) {
-        NetworkRequest.makeRequest("/mode/kodi", new ArrayList<NameValuePair>());
+        NetworkRequest.makeRequest("mode/kodi", new ArrayList<NameValuePair>());
     }
 
     public void xfce(View v) {
-        NetworkRequest.makeRequest("/mode/xfce", new ArrayList<NameValuePair>());
+        NetworkRequest.makeRequest("mode/xfce", new ArrayList<NameValuePair>());
     }
 
     public void terminal(View v) {
-        NetworkRequest.makeRequest("/mode/terminal", new ArrayList<NameValuePair>());
+        NetworkRequest.makeRequest("mode/terminal", new ArrayList<NameValuePair>());
     }
 
 

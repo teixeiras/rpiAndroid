@@ -1,5 +1,10 @@
 package com.pipplware.teixeiras.virtualkeypad.network;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.util.Log;
+
 import com.pipplware.teixeiras.virtualkeypad.MainActivity;
 
 import org.apache.http.HttpResponse;
@@ -9,17 +14,56 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
 
 /**
  * Created by teixeiras on 19/03/15.
  */
 public class NetworkRequest {
-    public static void makeRequest(final String service, final List<NameValuePair> parameters){
+
+    public interface URLReachableCallBack {
+        public void couldConnectToRemoteServer(final String server,final String port);
+
+        public void errorConnectingToRemoteServer(final String server, final String port);
+    }
+
+    static public void isURLReachable(final Context context, final String server, final String port, final URLReachableCallBack callback) {
+        new Thread() {
+            @Override
+            public void run() {
+                super.run();
+                ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+                NetworkInfo netInfo = cm.getActiveNetworkInfo();
+                if (netInfo != null && netInfo.isConnected()) {
+                    try {
+                        URL url = new URL(server);   // Change to "http://google.com" for www  test.
+                        HttpURLConnection urlc = (HttpURLConnection) url.openConnection();
+                        urlc.setConnectTimeout(10 * 1000);          // 10 s.
+                        urlc.connect();
+                        if (urlc.getResponseCode() == 200) {        // 200 = "OK" code (http connection is fine).
+                            Log.wtf("Connection", "Success !");
+                            callback.couldConnectToRemoteServer(server, port);
+                        } else {
+                            callback.errorConnectingToRemoteServer(server, port);
+                        }
+                    } catch (Exception e) {
+                        callback.errorConnectingToRemoteServer(server, port);
+                    }
+
+                }
+                callback.errorConnectingToRemoteServer(server, port);
+            }
+
+        }.run();
+
+    }
+
+    public static void makeRequest(final String service, final List<NameValuePair> parameters) {
         new Thread() {
 
             @Override
@@ -29,7 +73,7 @@ public class NetworkRequest {
                 if (MainActivity.port != null) {
                     address += ":" + MainActivity.port;
                 }
-                HttpPost httppost = new HttpPost(address + "/"+service);
+                HttpPost httppost = new HttpPost(address + "/" + service);
 
                 try {
                     // Add your data

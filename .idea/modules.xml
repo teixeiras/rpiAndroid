@@ -4,7 +4,8 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/VirtualKeypad.iml" filepath="$PROJECT_DIR$/VirtualKeypad.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/hackkeyboard/hackkeyboard.iml" filepath="$PROJECT_DIR$/hackkeyboard/hackkeyboard.iml" />
+      <module fileurl="file://$PROJECT_DIR$/libraries/connectbot/connectbot.iml" filepath="$PROJECT_DIR$/libraries/connectbot/connectbot.iml" />
+      <module fileurl="file://$PROJECT_DIR$/libraries/remote_keyboard/remote_keyboard.iml" filepath="$PROJECT_DIR$/libraries/remote_keyboard/remote_keyboard.iml" />
     </modules>
   </component>
 </project>

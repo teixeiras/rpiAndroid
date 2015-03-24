@@ -45,7 +45,7 @@
         <activity
             android:name=".ServerFindActivity"
             android:label="@string/title_activity_server_find"
-            android:windowSoftInputMode="stateHidden">
+            android:windowSoftInputMode="stateHidden" >
         </activity>
 
         <service android:name=".services.NDSService" />
@@ -78,6 +78,13 @@
             android:exported="true" >
         </service>
 
-      </application>
+        <activity
+            android:name=".SplashActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_splash"
+            android:theme="@android:style/Theme.Black.NoTitleBar"
+            >
+        </activity>
+    </application>
 
 </manifest>

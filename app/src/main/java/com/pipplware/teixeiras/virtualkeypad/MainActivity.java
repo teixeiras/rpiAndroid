@@ -1,28 +1,23 @@
 package com.pipplware.teixeiras.virtualkeypad;
 
-import java.util.Locale;
-
 import android.content.Intent;
 import android.net.Uri;
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
-import android.view.Gravity;
-import android.view.LayoutInflater;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.pipplware.teixeiras.virtualkeypad.keyboard.KeyboardFragment;
 import com.pipplware.teixeiras.virtualkeypad.psutil.PSUtil;
 import com.pipplware.teixeiras.virtualkeypad.torrents.TorrentFragment;
+
+import java.util.Locale;
 
 
 public class MainActivity extends ActionBarActivity implements ActionBar.TabListener,
@@ -92,6 +87,10 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         }
         Intent serverFind = new Intent(this, ServerFindActivity.class);
         startActivityForResult(serverFind, RESULT_IP);
+
+
+        Intent splashScreen = new Intent(this, SplashActivity.class);
+        startActivity(splashScreen);
     }
 
 

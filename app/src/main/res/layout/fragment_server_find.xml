@@ -1,136 +1,151 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.pipplware.teixeiras.virtualkeypad.ServerFindActivity$PlaceholderFragment">
-
-    <TextView
-        android:id="@+id/server_find_manual_ip_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:text="@string/server_find_manual_ip_title"
-        android:textSize="16dp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/server_find_description"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/server_find_manual_ip_title"
-        android:text="@string/server_find_area" />
+    android:layout_height="match_parent">
 
     <RelativeLayout
-        android:id="@+id/manual_login_area"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/server_find_description">
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        tools:context="com.pipplware.teixeiras.virtualkeypad.ServerFindActivity$PlaceholderFragment">
 
         <TextView
-            android:id="@+id/server_find_manual_ip_label"
+            android:id="@+id/server_find_manual_ip_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:text="@string/server_find_manual_ip_label"
+            android:text="@string/server_find_manual_ip_title"
+            android:textSize="16dp"
             android:textStyle="bold" />
 
-        <LinearLayout
-            android:id="@+id/manual_ip_input"
-            android:layout_width="fill_parent"
+        <TextView
+            android:id="@+id/server_find_description"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/server_find_manual_ip_label"
-            android:orientation="horizontal">
+            android:layout_below="@id/server_find_manual_ip_title"
+            android:text="@string/server_find_area" />
 
-            <EditText
-                android:id="@+id/server_find_manual_ip_a"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:gravity="center"
-                android:inputType="number"
-                android:maxLength="3"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp" />
-
-            <EditText
-                android:id="@+id/server_find_manual_ip_b"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:gravity="center"
-                android:inputType="number"
-                android:maxLength="3"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp" />
-
-            <EditText
-                android:id="@+id/server_find_manual_ip_c"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:gravity="center"
-                android:inputType="number"
-                android:maxLength="3"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp" />
-
-            <EditText
-                android:id="@+id/server_find_manual_ip_d"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:gravity="center"
-                android:inputType="number"
-                android:maxLength="3"
-                android:paddingLeft="5dp" />
+        <RelativeLayout
+            android:id="@+id/manual_login_area"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/server_find_description">
 
             <TextView
+                android:id="@+id/server_find_manual_ip_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:text="@string/server_find_manual_ip_label"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/server_error"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/server_find_manual_ip_label"
+                android:textColor="@color/red"
+                android:textStyle="bold"
+                android:visibility="gone"/>
+
+            <LinearLayout
+                android:id="@+id/manual_ip_input"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/server_error"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/server_find_manual_ip_a"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:maxLength="3"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp" />
+
+                <EditText
+                    android:id="@+id/server_find_manual_ip_b"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:maxLength="3"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp" />
+
+                <EditText
+                    android:id="@+id/server_find_manual_ip_c"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:maxLength="3"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp" />
+
+                <EditText
+                    android:id="@+id/server_find_manual_ip_d"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:maxLength="3"
+                    android:paddingLeft="5dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/server_find_manual_port_separator" />
+
+
+                <EditText
+                    android:id="@+id/server_find_manual_ip_port"
+                    android:layout_width="55dp"
+                    android:layout_height="50dp"
+                    android:gravity="center"
+                    android:inputType="number"
+                    android:maxLength="4" />
+
+            </LinearLayout>
+
+            <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/server_find_manual_port_separator" />
+                android:layout_alignParentRight="true"
+                android:layout_below="@id/manual_ip_input"
+                android:onClick="onClickButton"
+                android:text="@string/server_find_manual_button_text" />
+        </RelativeLayout>
 
-
-            <EditText
-                android:id="@+id/server_find_manual_ip_port"
-                android:layout_width="55dp"
-                android:layout_height="50dp"
-                android:gravity="center"
-                android:inputType="number"
-                android:maxLength="4" />
-
-        </LinearLayout>
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_below="@id/manual_ip_input"
-            android:onClick="onClickButton"
-            android:text="@string/server_find_manual_button_text" />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="fill_parent"
-        android:layout_alignParentBottom="true"
-        android:layout_below="@id/manual_login_area">
-
-        <TextView
-            android:id="@+id/server_find_bonjour"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:text="@string/server_find_bonjour"
-            android:textStyle="bold" />
+            android:layout_height="fill_parent"
+            android:layout_alignParentBottom="true"
+            android:layout_below="@id/manual_login_area">
 
-        <ListView
-            android:id="@+id/bonjour_server_listview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@id/server_find_bonjour"
-            android:stackFromBottom="false">
+            <TextView
+                android:id="@+id/server_find_bonjour"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:text="@string/server_find_bonjour"
+                android:textStyle="bold" />
 
-        </ListView>
+            <ListView
+                android:id="@+id/bonjour_server_listview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/server_find_bonjour"
+                android:stackFromBottom="false">
+
+            </ListView>
+        </RelativeLayout>
+
     </RelativeLayout>
-
-</RelativeLayout>
+</ScrollView>

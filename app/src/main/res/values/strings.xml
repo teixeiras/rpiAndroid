@@ -9,13 +9,13 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_example">Example action</string>
     <string name="action_settings">Settings</string>
-    <string name="server_find_area">Tem duas opções para encontrar o seu raspberrypi. Usando bonjour ou inserindo manualmente o ip. Se o seu raspberry já se encontrar com o dongle de Wifi mas ainda não tiver configurado, o pipplware configura automtáticamente uma rede ad-hoc. Ligue a seu android a esta rede para poder ligar ao serviço.</string>
+    <string name="server_find_area">Detalhes do servidor</string>
     <string name="server_find_manual_ip_label">IP manual</string>
-    <string name="server_find_bonjour">Raspberry Found</string>
+    <string name="server_find_bonjour">Bonjour</string>
     <string name="title_activity_server_find">ServerFind</string>
     <string name="hello_world">Hello world!</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="server_find_manual_button_text">Connect</string>
+    <string name="server_find_manual_button_text">Ligar-se</string>
     <string name="server_find_manual_port_separator">:</string>
     <string name="reboot_rpi">Reboot</string>
     <string name="boot_to_emulation_failover_xbmc">Default to ES (failover XBMC)</string>
@@ -23,14 +23,13 @@
     <string name="boot_to_xbmc">Default to Kodi</string>
     <string name="boot_to_xfce">Default to XFCE</string>
     <string name="terminal">Default to Terminal</string>
-    <string name="server_find_manual_ip_title">Server Address</string>
-    <string name="server_find_manual_server">Manual IP</string>
+    <string name="server_find_manual_ip_title">Endereço do Servidor</string>
+    <string name="server_find_manual_server">IP manual</string>
 
     <string-array name="keyboards_list">
         <item>Gamepad</item>
         <item>Teclado</item>
     </string-array>
-
     <string-array name="command_list">
         <item>@string/reboot_rpi</item>
         <item>@string/boot_to_emulation_failover_xbmc</item>
@@ -39,7 +38,12 @@
         <item>@string/boot_to_xfce</item>
         <item>@string/terminal</item>
     </string-array>
+
     <string name="title_activity_main_activity2">MainActivity2</string>
     <string name="command_execute">Executar</string>
+    <string name="title_activity_splash">SplashActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="could_not_connect_server">Não conseguiu encontrar o servidor</string>
 
 </resources>
