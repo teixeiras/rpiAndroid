@@ -45,5 +45,10 @@
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
     <string name="could_not_connect_server">Não conseguiu encontrar o servidor</string>
+    <string name="title_section4">SSH</string>
+    <string name="kill_button">Kill</string>
+    <string name="process_pid">PID</string>
+    <string name="process_memory">RAM</string>
+    <string name="process_name">Nome</string>
 
 </resources>

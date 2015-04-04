@@ -45,7 +45,9 @@
         <activity
             android:name=".ServerFindActivity"
             android:label="@string/title_activity_server_find"
-            android:windowSoftInputMode="stateHidden" >
+            android:windowSoftInputMode="stateHidden"
+            android:theme="@style/Theme.AppCompat.Light"
+            android:logo="@drawable/logo_pipplware">
         </activity>
 
         <service android:name=".services.NDSService" />

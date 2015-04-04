@@ -41,25 +41,29 @@ public class NetworkRequest {
                 NetworkInfo netInfo = cm.getActiveNetworkInfo();
                 if (netInfo != null && netInfo.isConnected()) {
                     try {
-                        URL url = new URL(server);   // Change to "http://google.com" for www  test.
+                        URL url = new URL("http://"+server+":"+port+"/info");   // Change to "http://google.com" for www  test.
                         HttpURLConnection urlc = (HttpURLConnection) url.openConnection();
                         urlc.setConnectTimeout(10 * 1000);          // 10 s.
                         urlc.connect();
                         if (urlc.getResponseCode() == 200) {        // 200 = "OK" code (http connection is fine).
                             Log.wtf("Connection", "Success !");
                             callback.couldConnectToRemoteServer(server, port);
+                            return;
                         } else {
                             callback.errorConnectingToRemoteServer(server, port);
+                            return;
                         }
                     } catch (Exception e) {
                         callback.errorConnectingToRemoteServer(server, port);
+                        return;
                     }
 
                 }
                 callback.errorConnectingToRemoteServer(server, port);
+                return;
             }
 
-        }.run();
+        }.start();
 
     }
 

@@ -13,6 +13,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -28,6 +30,8 @@ public class ServerFindActivity extends FragmentActivity implements NDSService.C
     private boolean mBound = false;
     ProgressDialog progress;
     private ArrayAdapter<String> bonjourServersArrayAdapter;
+    Animation animFadeOut;
+    Animation animFadeIn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,14 +42,17 @@ public class ServerFindActivity extends FragmentActivity implements NDSService.C
                     .add(R.id.container, new PlaceholderFragment())
                     .commit();
         }
+        animFadeOut = AnimationUtils.loadAnimation(getApplicationContext(), android.R.anim.fade_out);
+        animFadeIn = AnimationUtils.loadAnimation(getApplicationContext(), android.R.anim.fade_in);
     }
+
     public void onClickButton(View view) {
-        String a = ((EditText)findViewById(R.id.server_find_manual_ip_a)).getText().toString();
-        String b = ((EditText)findViewById(R.id.server_find_manual_ip_b)).getText().toString();
-        String c = ((EditText)findViewById(R.id.server_find_manual_ip_c)).getText().toString();
-        String d = ((EditText)findViewById(R.id.server_find_manual_ip_d)).getText().toString();
+        String a = ((EditText) findViewById(R.id.server_find_manual_ip_a)).getText().toString();
+        String b = ((EditText) findViewById(R.id.server_find_manual_ip_b)).getText().toString();
+        String c = ((EditText) findViewById(R.id.server_find_manual_ip_c)).getText().toString();
+        String d = ((EditText) findViewById(R.id.server_find_manual_ip_d)).getText().toString();
         String ip = a + "." + b + "." + c + "." + d;
-        String port = ((EditText)findViewById(R.id.server_find_manual_ip_port)).getText().toString();
+        String port = ((EditText) findViewById(R.id.server_find_manual_ip_port)).getText().toString();
         nextActivityWithIp(ip, port);
     }
 
@@ -60,7 +67,7 @@ public class ServerFindActivity extends FragmentActivity implements NDSService.C
                 Intent returnIntent = new Intent();
                 returnIntent.putExtra(MainActivity.EXTRA_IP, server);
                 returnIntent.putExtra(MainActivity.EXTRA_PORT, port);
-                setResult(RESULT_OK,returnIntent);
+                setResult(RESULT_OK, returnIntent);
                 finish();
 
             }
@@ -71,44 +78,59 @@ public class ServerFindActivity extends FragmentActivity implements NDSService.C
     @Override
     public void errorConnectingToRemoteServer(final String server, final String port) {
         Log.d("CONNECTION", "Could not connect to server");
-        progress.hide();
         runOnUiThread(new Runnable() {
-                          @Override
-                          public void run() {
-                              TextView view = (TextView)findViewById(R.id.server_error);
-                              view.setText(R.string.could_not_connect_server);
-                              view.setVisibility(View.VISIBLE);
-                          }
-                      });
+            @Override
+            public void run() {
+                progress.hide();
+
+                TextView view = (TextView) findViewById(R.id.server_error);
+                view.setText(R.string.could_not_connect_server);
+                view.setAnimation(animFadeIn);
+
+                view.setVisibility(View.VISIBLE);
+            }
+        });
 
     }
 
     private void nextActivityWithIp(final NDSService.Server server) {
-        progress = ProgressDialog.show(this, "Loading", "Wait while loading...");
 
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                TextView view = (TextView) findViewById(R.id.server_error);
-                view.setVisibility(View.GONE);
+                try {
+                    progress = ProgressDialog.show(ServerFindActivity.this, "Loading", "Wait while loading...");
+
+                    TextView view = (TextView) findViewById(R.id.server_error);
+                    view.setAnimation(animFadeOut);
+
+                    view.setVisibility(View.GONE);
+
+                    NetworkRequest.isURLReachable(ServerFindActivity.this, server.ip, server.port, ServerFindActivity.this);
+                } catch (Exception e) {
+
+                }
             }
         });
-        NetworkRequest.isURLReachable(this, server.ip, server.port, this);
 
     }
 
     private void nextActivityWithIp(final String ip, final String port) {
-        progress = ProgressDialog.show(this, "Loading", "Wait while loading...");
 
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                progress = ProgressDialog.show(ServerFindActivity.this, "Loading", "Wait while loading...");
+
                 TextView view = (TextView) findViewById(R.id.server_error);
+                view.setAnimation(animFadeOut);
                 view.setVisibility(View.GONE);
+
+                NetworkRequest.isURLReachable(ServerFindActivity.this, ip, port, ServerFindActivity.this);
+
             }
         });
 
-        NetworkRequest.isURLReachable(this, ip, port, this);
     }
 
     @Override
@@ -124,7 +146,7 @@ public class ServerFindActivity extends FragmentActivity implements NDSService.C
     @Override
     protected void onResumeFragments() {
         super.onResumeFragments();
-        ListView bonjourServersListView = (ListView)findViewById(R.id.bonjour_server_listview);
+        ListView bonjourServersListView = (ListView) findViewById(R.id.bonjour_server_listview);
         bonjourServersArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
 
         bonjourServersListView.setAdapter(bonjourServersArrayAdapter);
@@ -137,14 +159,14 @@ public class ServerFindActivity extends FragmentActivity implements NDSService.C
         updatedData();
 
 
-        EditText a = ((EditText)findViewById(R.id.server_find_manual_ip_a));
-        EditText b = ((EditText)findViewById(R.id.server_find_manual_ip_b));
-        EditText c = ((EditText)findViewById(R.id.server_find_manual_ip_c));
-        EditText d = ((EditText)findViewById(R.id.server_find_manual_ip_d));
+        EditText a = ((EditText) findViewById(R.id.server_find_manual_ip_a));
+        EditText b = ((EditText) findViewById(R.id.server_find_manual_ip_b));
+        EditText c = ((EditText) findViewById(R.id.server_find_manual_ip_c));
+        EditText d = ((EditText) findViewById(R.id.server_find_manual_ip_d));
 
-        EditText port = ((EditText)findViewById(R.id.server_find_manual_ip_port));
+        EditText port = ((EditText) findViewById(R.id.server_find_manual_ip_port));
 
-        if (Preferences.sharedInstance(this).getString(Preferences.PREFERENCE_IP, "").length() > 0) {
+        /*if (Preferences.sharedInstance(this).getString(Preferences.PREFERENCE_IP, "").length() > 0) {
             String ip[] = Preferences.sharedInstance(this).getString(Preferences.PREFERENCE_IP, "").split(".");;
             a.setText(ip[0]);
             b.setText(ip[1]);
@@ -153,8 +175,25 @@ public class ServerFindActivity extends FragmentActivity implements NDSService.C
 
             port.setText(Preferences.sharedInstance(this).getString(Preferences.PREFERENCE_PORT, ""));
 
-        }
+        }*/
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (mBound) {
+            mService.setCallBack(null);
+            try {
+                unbindService(mConnection);
+                mService.setCallBack(null);
+
+            } catch (Exception e) {
+
+            }
+            mBound = false;
+
+        }
     }
 
     @Override
@@ -163,9 +202,10 @@ public class ServerFindActivity extends FragmentActivity implements NDSService.C
         // Unbind from the service
         if (mBound) {
             mService.setCallBack(null);
-            try{
+            try {
                 unbindService(mConnection);
-            }catch(Exception e) {
+                mService.setCallBack(null);
+            } catch (Exception e) {
 
             }
             mBound = false;
@@ -178,7 +218,9 @@ public class ServerFindActivity extends FragmentActivity implements NDSService.C
 
     }
 
-    /** Defines callbacks for service binding, passed to bindService() */
+    /**
+     * Defines callbacks for service binding, passed to bindService()
+     */
     private ServiceConnection mConnection = new ServiceConnection() {
 
         @Override
@@ -203,7 +245,6 @@ public class ServerFindActivity extends FragmentActivity implements NDSService.C
     }
 
 
-
     /**
      * A placeholder fragment containing a simple view.
      */
@@ -220,13 +261,13 @@ public class ServerFindActivity extends FragmentActivity implements NDSService.C
     }
 
     public void updatedData() {
-        if (bonjourServersArrayAdapter!= null && mBound) {
+        if (bonjourServersArrayAdapter != null && mBound) {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
                     bonjourServersArrayAdapter.clear();
 
-                    if (mService.getmRPiAddress() != null){
+                    if (mService.getmRPiAddress() != null) {
 
                         for (NDSService.Server object : mService.getmRPiAddress()) {
 

@@ -1,1 +1,1 @@
-include ':app', ':libraries:remote_keyboard', ':libraries:connectbot'
+include ':app', ':libraries:remote_keyboard'

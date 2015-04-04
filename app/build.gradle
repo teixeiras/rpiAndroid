@@ -31,6 +31,7 @@ repositories {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':libraries:remote_keyboard')
+
     compile 'com.android.support:appcompat-v7:22.0.0'
     compile 'com.google.code.gson:gson:2.2.+'
     compile 'org.achartengine:achartengine:1.2.0'

@@ -8,9 +8,59 @@ import java.util.ArrayList;
 public class PS {
     public class Process{
         ArrayList<String> cmdline;
+        String pid;
         String memory;
         String name;
         String cpu;
+
+        public int compareTo(Process other) {
+            return cpu.compareTo(other.cpu);
+        }
+
+
+        public String getPid() {
+            return pid;
+        }
+
+        public void setPid(String pid) {
+            this.pid = pid;
+        }
+
+
+        public ArrayList<String> getCmdline() {
+            return cmdline;
+        }
+
+        public void setCmdline(ArrayList<String> cmdline) {
+            this.cmdline = cmdline;
+        }
+
+        public String getMemory() {
+            return memory;
+        }
+
+        public void setMemory(String memory) {
+            this.memory = memory;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public String getCpu() {
+            return cpu;
+        }
+
+        public void setCpu(String cpu) {
+            this.cpu = cpu;
+        }
+
+
+
     }
 
     ArrayList<Process> processes;

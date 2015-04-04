@@ -16,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 
 import com.pipplware.teixeiras.virtualkeypad.R;
+import com.rekap.remote.RemoteKeyboardFragment;
 
 
 /**
@@ -118,7 +119,7 @@ public class KeyboardFragment extends Fragment {
             if (position == 0) {
                 return new KeyboardGamepadFragment();
             } else {
-                return new KeyboardNormalFragment();
+                return new RemoteKeyboardFragment();
             }
 
         }

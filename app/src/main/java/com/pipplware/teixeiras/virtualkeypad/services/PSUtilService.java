@@ -12,6 +12,8 @@ import com.pipplware.teixeiras.virtualkeypad.network.models.PS;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -63,7 +65,7 @@ public class PSUtilService extends Service
     private static Timer timer = new Timer();
 
     public interface CallBack {
-        public void update(int processorNumber, List<List<String>> cpuLoading, List<List<String>> memory);
+        public void update(int processorNumber, List<List<String>> cpuLoading, List<List<String>> memory, ArrayList<PS.Process> processes);
     }
 
     public void setCallBack(CallBack callBack) {
@@ -137,8 +139,16 @@ public class PSUtilService extends Service
         if (memoryList.size() > 8)
             memoryList = memoryList.subList(memoryList.size() -8, memoryList.size()-1);
 
+        ArrayList<PS.Process> processes = response.getProcesses();
+
+        Collections.sort(processes , new Comparator<PS.Process>() {
+            public int compare(PS.Process  one, PS.Process other) {
+                return one.getMemory().compareTo(other.getMemory()) * -1;
+            }
+        });
+
         if (this.callBack != null) {
-            this.callBack.update(response.getNumber_of_processors(), processorLoadList, memoryList);
+            this.callBack.update(response.getNumber_of_processors(), processorLoadList, memoryList, processes);
 
         }
 
