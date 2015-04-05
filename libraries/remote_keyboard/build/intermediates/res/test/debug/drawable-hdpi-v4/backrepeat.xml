@@ -1,0 +1,5 @@
+<bitmap
+xmlns:android="http://schemas.android.com/apk/res/android"
+android:src="@drawable/background"
+android:tileMode="repeat"
+android:dither="true" /><!-- From: file:/Volumes/Secundary/Projects/Vodafone/OneNet/VirtualKeypad/libraries/remote_keyboard/src/main/res/drawable-hdpi/backrepeat.xml --><!-- From: file:/Volumes/Secundary/Projects/Vodafone/OneNet/VirtualKeypad/libraries/remote_keyboard/build/intermediates/bundles/debug/res/drawable-hdpi-v4/backrepeat.xml -->

@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<issues format="4" by="lint 24.1.2">
+
+    <issue
+        id="GradleDeprecated"
+        severity="Warning"
+        message="&apos;android-library&apos; is deprecated; use &apos;com.android.library&apos; instead"
+        category="Correctness"
+        priority="6"
+        summary="Deprecated Gradle Construct"
+        explanation="This detector looks for deprecated Gradle constructs which currently work but will likely stop working in a future update."
+        errorLine1="apply plugin: &apos;android-library&apos;"
+        errorLine2="~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+        quickfix="studio">
+        <location
+            file="/Volumes/Secundary/Projects/Vodafone/OneNet/VirtualKeypad/libraries/SimpleComputer/build.gradle"
+            line="1"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="OldTargetApi"
+        severity="Warning"
+        message="Not targeting the latest versions of Android; compatibility modes apply. Consider testing and updating this version. Consult the `android.os.Build.VERSION_CODES` javadoc for details."
+        category="Correctness"
+        priority="6"
+        summary="Target SDK attribute is not targeting latest version"
+        explanation="When your application runs on a version of Android that is more recent than your `targetSdkVersion` specifies that it has been tested with, various compatibility modes kick in. This ensures that your application continues to work, but it may look out of place. For example, if the `targetSdkVersion` is less than 14, your app may get an option button in the UI.
+
+To fix this issue, set the `targetSdkVersion` to the highest available value. Then test your app to make sure everything works correctly. You may want to consult the compatibility notes to see what changes apply to each version you are adding support for: http://developer.android.com/reference/android/os/Build.VERSION_CODES.html"
+        url="http://developer.android.com/reference/android/os/Build.VERSION_CODES.html"
+        urls="http://developer.android.com/reference/android/os/Build.VERSION_CODES.html"
+        errorLine1="        android:targetSdkVersion=&quot;17&quot; />"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+        quickfix="studio">
+        <location
+            file="/Volumes/Secundary/Projects/Vodafone/OneNet/VirtualKeypad/libraries/SimpleComputer/src/main/AndroidManifest.xml"
+            line="8"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="OldTargetApi"
+        severity="Warning"
+        message="Not targeting the latest versions of Android; compatibility modes apply. Consider testing and updating this version. Consult the android.os.Build.VERSION_CODES javadoc for details."
+        category="Correctness"
+        priority="6"
+        summary="Target SDK attribute is not targeting latest version"
+        explanation="When your application runs on a version of Android that is more recent than your `targetSdkVersion` specifies that it has been tested with, various compatibility modes kick in. This ensures that your application continues to work, but it may look out of place. For example, if the `targetSdkVersion` is less than 14, your app may get an option button in the UI.
+
+To fix this issue, set the `targetSdkVersion` to the highest available value. Then test your app to make sure everything works correctly. You may want to consult the compatibility notes to see what changes apply to each version you are adding support for: http://developer.android.com/reference/android/os/Build.VERSION_CODES.html"
+        url="http://developer.android.com/reference/android/os/Build.VERSION_CODES.html"
+        urls="http://developer.android.com/reference/android/os/Build.VERSION_CODES.html"
+        errorLine1="        targetSdkVersion 17"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~"
+        quickfix="studio">
+        <location
+            file="/Volumes/Secundary/Projects/Vodafone/OneNet/VirtualKeypad/libraries/SimpleComputer/build.gradle"
+            line="9"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="GradleDependency"
+        severity="Warning"
+        message="A newer version of com.android.support:support-v4 than 18.+ is available: 22.0.0"
+        category="Correctness"
+        priority="4"
+        summary="Obsolete Gradle Dependency"
+        explanation="This detector looks for usages of libraries where the version you are using is not the current stable release. Using older versions is fine, and there are cases where you deliberately want to stick with an older version. However, you may simply not be aware that a more recent version is available, and that is what this lint check helps find."
+        errorLine1="    compile &apos;com.android.support:support-v4:18.+&apos;"
+        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+        quickfix="studio">
+        <location
+            file="/Volumes/Secundary/Projects/Vodafone/OneNet/VirtualKeypad/libraries/SimpleComputer/build.gradle"
+            line="25"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="GradleDynamicVersion"
+        severity="Warning"
+        message="Avoid using + in version numbers; can lead to unpredictable and unrepeatable builds (com.android.support:support-v4:18.+)"
+        category="Correctness"
+        priority="4"
+        summary="Gradle Dynamic Version"
+        explanation="Using `+` in dependencies lets you automatically pick up the latest available version rather than a specific, named version. However, this is not recommended; your builds are not repeatable; you may have tested with a slightly different version than what the build server used. (Using a dynamic version as the major version number is more problematic than using it in the minor version position.)"
+        errorLine1="    compile &apos;com.android.support:support-v4:18.+&apos;"
+        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+        quickfix="studio">
+        <location
+            file="/Volumes/Secundary/Projects/Vodafone/OneNet/VirtualKeypad/libraries/SimpleComputer/build.gradle"
+            line="25"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="GradleOverrides"
+        severity="Warning"
+        message="This `minSdkVersion` value (`7`) is not used; it is always overridden by the value specified in the Gradle build script (`7`)"
+        category="Correctness"
+        priority="4"
+        summary="Value overridden by Gradle build script"
+        explanation="The value of (for example) `minSdkVersion` is only used if it is not specified in the `build.gradle` build scripts. When specified in the Gradle build scripts, the manifest value is ignored and can be misleading, so should be removed to avoid ambiguity."
+        errorLine1="        android:minSdkVersion=&quot;7&quot;"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="/Volumes/Secundary/Projects/Vodafone/OneNet/VirtualKeypad/libraries/SimpleComputer/src/main/AndroidManifest.xml"
+            line="7"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="GradleOverrides"
+        severity="Warning"
+        message="This `targetSdkVersion` value (`17`) is not used; it is always overridden by the value specified in the Gradle build script (`17`)"
+        category="Correctness"
+        priority="4"
+        summary="Value overridden by Gradle build script"
+        explanation="The value of (for example) `minSdkVersion` is only used if it is not specified in the `build.gradle` build scripts. When specified in the Gradle build scripts, the manifest value is ignored and can be misleading, so should be removed to avoid ambiguity."
+        errorLine1="        android:targetSdkVersion=&quot;17&quot; />"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="/Volumes/Secundary/Projects/Vodafone/OneNet/VirtualKeypad/libraries/SimpleComputer/src/main/AndroidManifest.xml"
+            line="8"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="Overdraw"
+        severity="Warning"
+        message="Possible overdraw: Root element paints background `@drawable/backrepeat` with a theme that also paints a background (inferred theme is `@android:style/Theme.Holo`)"
+        category="Performance"
+        priority="3"
+        summary="Overdraw: Painting regions more than once"
+        explanation="If you set a background drawable on a root view, then you should use a custom theme where the theme background is null. Otherwise, the theme background will be painted first, only to have your custom background completely cover it; this is called &quot;overdraw&quot;.
+
+NOTE: This detector relies on figuring out which layouts are associated with which activities based on scanning the Java code, and it&apos;s currently doing that using an inexact pattern matching algorithm. Therefore, it can incorrectly conclude which activity the layout is associated with and then wrongly complain that a background-theme is hidden.
+
+If you want your custom background on multiple pages, then you should consider making a custom theme with your custom background and just using that theme instead of a root element background.
+
+Of course it&apos;s possible that your custom drawable is translucent and you want it to be mixed with the background. However, you will get better performance if you pre-mix the background with your drawable and use that resulting image or color as a custom theme background instead.
+"
+        errorLine1="    android:background=&quot;@drawable/backrepeat&quot;"
+        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="/Volumes/Secundary/Projects/Vodafone/OneNet/VirtualKeypad/libraries/SimpleComputer/src/main/res/layout/main.xml"
+            line="6"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        severity="Warning"
+        message="The resource `R.drawable.remicon` appears to be unused"
+        category="Performance"
+        priority="3"
+        summary="Unused resources"
+        explanation="Unused resources make applications larger and slow down builds.">
+        <location
+            file="/Volumes/Secundary/Projects/Vodafone/OneNet/VirtualKeypad/libraries/SimpleComputer/src/main/res/drawable-hdpi/remicon.png"/>
+        <location
+            file="/Volumes/Secundary/Projects/Vodafone/OneNet/VirtualKeypad/libraries/SimpleComputer/src/main/res/drawable-ldpi/remicon.png"/>
+        <location
+            file="/Volumes/Secundary/Projects/Vodafone/OneNet/VirtualKeypad/libraries/SimpleComputer/src/main/res/drawable-mdpi/remicon.png"/>
+        <location
+            file="/Volumes/Secundary/Projects/Vodafone/OneNet/VirtualKeypad/libraries/SimpleComputer/src/main/res/drawable-xhdpi/remicon.png"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        severity="Warning"
+        message="The resource `R.string.prefs` appears to be unused"
+        category="Performance"
+        priority="3"
+        summary="Unused resources"
+        explanation="Unused resources make applications larger and slow down builds."
+        errorLine1="    &lt;string name=&quot;prefs&quot;>Preferences&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~">
+        <location
+            file="/Volumes/Secundary/Projects/Vodafone/OneNet/VirtualKeypad/libraries/SimpleComputer/src/main/res/values/strings.xml"
+            line="5"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        severity="Warning"
+        message="The resource `R.string.reconnect` appears to be unused"
+        category="Performance"
+        priority="3"
+        summary="Unused resources"
+        explanation="Unused resources make applications larger and slow down builds."
+        errorLine1="        &lt;string name=&quot;reconnect&quot;>Reconnect&lt;/string>"
+        errorLine2="                ~~~~~~~~~~~~~~~~">
+        <location
+            file="/Volumes/Secundary/Projects/Vodafone/OneNet/VirtualKeypad/libraries/SimpleComputer/src/main/res/values/strings.xml"
+            line="9"
+            column="17"/>
+    </issue>
+
+    <issue
+        id="IconDipSize"
+        severity="Warning"
+        message="The image `remicon.png` varies significantly in its density-independent (dip) size across the various density versions: drawable-ldpi/remicon.png: 64x64 dp (48x48 px), drawable-hdpi/remicon.png: 48x48 dp (72x72 px), drawable-mdpi/remicon.png: 48x48 dp (48x48 px), drawable-xhdpi/remicon.png: 48x48 dp (96x96 px)"
+        category="Usability:Icons"
+        priority="5"
+        summary="Icon density-independent size validation"
+        explanation="Checks the all icons which are provided in multiple densities, all compute to roughly the same density-independent pixel (`dip`) size. This catches errors where images are either placed in the wrong folder, or icons are changed to new sizes but some folders are forgotten.">
+        <location
+            file="/Volumes/Secundary/Projects/Vodafone/OneNet/VirtualKeypad/libraries/SimpleComputer/src/main/res/drawable-xhdpi/remicon.png"/>
+        <location
+            file="/Volumes/Secundary/Projects/Vodafone/OneNet/VirtualKeypad/libraries/SimpleComputer/src/main/res/drawable-mdpi/remicon.png"/>
+        <location
+            file="/Volumes/Secundary/Projects/Vodafone/OneNet/VirtualKeypad/libraries/SimpleComputer/src/main/res/drawable-hdpi/remicon.png"/>
+        <location
+            file="/Volumes/Secundary/Projects/Vodafone/OneNet/VirtualKeypad/libraries/SimpleComputer/src/main/res/drawable-ldpi/remicon.png"/>
+    </issue>
+
+    <issue
+        id="IconDensities"
+        severity="Warning"
+        message="Missing the following drawables in `drawable-mdpi`: background.jpg, backrepeat.xml"
+        category="Usability:Icons"
+        priority="4"
+        summary="Icon densities validation"
+        explanation="Icons will look best if a custom version is provided for each of the major screen density classes (low, medium, high, extra high). This lint check identifies icons which do not have complete coverage across the densities.
+
+Low density is not really used much anymore, so this check ignores the ldpi density. To force lint to include it, set the environment variable `ANDROID_LINT_INCLUDE_LDPI=true`. For more information on current density usage, see http://developer.android.com/resources/dashboard/screens.html"
+        url="http://developer.android.com/guide/practices/screens_support.html"
+        urls="http://developer.android.com/guide/practices/screens_support.html">
+        <location
+            file="/Volumes/Secundary/Projects/Vodafone/OneNet/VirtualKeypad/libraries/SimpleComputer/src/main/res/drawable-mdpi"/>
+    </issue>
+
+    <issue
+        id="IconDensities"
+        severity="Warning"
+        message="Missing the following drawables in `drawable-xhdpi`: background.jpg, backrepeat.xml"
+        category="Usability:Icons"
+        priority="4"
+        summary="Icon densities validation"
+        explanation="Icons will look best if a custom version is provided for each of the major screen density classes (low, medium, high, extra high). This lint check identifies icons which do not have complete coverage across the densities.
+
+Low density is not really used much anymore, so this check ignores the ldpi density. To force lint to include it, set the environment variable `ANDROID_LINT_INCLUDE_LDPI=true`. For more information on current density usage, see http://developer.android.com/resources/dashboard/screens.html"
+        url="http://developer.android.com/guide/practices/screens_support.html"
+        urls="http://developer.android.com/guide/practices/screens_support.html">
+        <location
+            file="/Volumes/Secundary/Projects/Vodafone/OneNet/VirtualKeypad/libraries/SimpleComputer/src/main/res/drawable-xhdpi"/>
+    </issue>
+
+    <issue
+        id="IconMissingDensityFolder"
+        severity="Warning"
+        message="Missing density variation folders in `src/main/res`: drawable-xxhdpi, drawable-xxxhdpi"
+        category="Usability:Icons"
+        priority="3"
+        summary="Missing density folder"
+        explanation="Icons will look best if a custom version is provided for each of the major screen density classes (low, medium, high, extra-high, extra-extra-high). This lint check identifies folders which are missing, such as `drawable-hdpi`.
+Low density is not really used much anymore, so this check ignores the ldpi density. To force lint to include it, set the environment variable `ANDROID_LINT_INCLUDE_LDPI=true`. For more information on current density usage, see http://developer.android.com/resources/dashboard/screens.html"
+        url="http://developer.android.com/guide/practices/screens_support.html"
+        urls="http://developer.android.com/guide/practices/screens_support.html">
+        <location
+            file="/Volumes/Secundary/Projects/Vodafone/OneNet/VirtualKeypad/libraries/SimpleComputer/src/main/res"/>
+    </issue>
+
+    <issue
+        id="ClickableViewAccessibility"
+        severity="Warning"
+        message="`com/rekap/remote/TouchpadHandler#onTouch` should call `View#performClick` when a click is detected"
+        category="Accessibility"
+        priority="6"
+        summary="Accessibility in Custom Views"
+        explanation="If a `View` that overrides `onTouchEvent` or uses an `OnTouchListener` does not also implement `performClick` and call it when clicks are detected, the `View` may not handle accessibility actions properly. Logic handling the click actions should ideally be placed in `View#performClick` as some accessibility services invoke `performClick` when a click action should occur."
+        errorLine1=" public boolean onTouch(View v, MotionEvent event) {"
+        errorLine2="                ~~~~~~~">
+        <location
+            file="/Volumes/Secundary/Projects/Vodafone/OneNet/VirtualKeypad/libraries/SimpleComputer/src/main/java/com/rekap/remote/TouchpadHandler.java"
+            line="14"
+            column="17"/>
+    </issue>
+
+    <issue
+        id="RelativeOverlap"
+        severity="Warning"
+        message="`@id/rightClick` can overlap `@id/menuButton` if @string/blank grows due to localized text expansion"
+        category="Internationalization"
+        priority="3"
+        summary="Overlapping items in RelativeLayout"
+        explanation="If relative layout has text or button items aligned to left and right sides they can overlap each other due to localized text expansion unless they have mutual constraints like `toEndOf`/`toStartOf`."
+        errorLine1="    &lt;Button"
+        errorLine2="    ^">
+        <location
+            file="/Volumes/Secundary/Projects/Vodafone/OneNet/VirtualKeypad/libraries/SimpleComputer/src/main/res/layout/main.xml"
+            line="31"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="RtlHardcoded"
+        severity="Warning"
+        message="Consider adding `android:layout_alignParentStart=&quot;true&quot;` to better support right-to-left layouts"
+        category="Bi-directional Text"
+        priority="5"
+        summary="Using left/right instead of start/end attributes"
+        explanation="Using `Gravity#LEFT` and `Gravity#RIGHT` can lead to problems when a layout is rendered in locales where text flows from right to left. Use `Gravity#START` and `Gravity#END` instead. Similarly, in XML `gravity` and `layout_gravity` attributes, use `start` rather than `left`.
+For XML attributes such as paddingLeft and `layout_marginLeft`, use `paddingStart` and `layout_marginStart`. *NOTE*: If your `minSdkVersion` is less than 17, you should add *both* the older left/right attributes *as well as* the new start/right attributes. On older platforms, where RTL is not supported and the start/right attributes are unknown and therefore ignored, you need the older left/right attributes. There is a separate lint check which catches that type of error.
+(Note: For `Gravity#LEFT` and `Gravity#START`, you can use these constants even when targeting older platforms, because the `start` bitmask is a superset of the `left` bitmask. Therefore, you can use `gravity=&quot;start&quot;` rather than `gravity=&quot;left|start&quot;`.)"
+        errorLine1="        android:layout_alignParentLeft=&quot;true&quot;"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="/Volumes/Secundary/Projects/Vodafone/OneNet/VirtualKeypad/libraries/SimpleComputer/src/main/res/layout/main.xml"
+            line="26"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="RtlHardcoded"
+        severity="Warning"
+        message="Consider adding `android:layout_toStartOf=&quot;@+id/menuButton&quot;` to better support right-to-left layouts"
+        category="Bi-directional Text"
+        priority="5"
+        summary="Using left/right instead of start/end attributes"
+        explanation="Using `Gravity#LEFT` and `Gravity#RIGHT` can lead to problems when a layout is rendered in locales where text flows from right to left. Use `Gravity#START` and `Gravity#END` instead. Similarly, in XML `gravity` and `layout_gravity` attributes, use `start` rather than `left`.
+For XML attributes such as paddingLeft and `layout_marginLeft`, use `paddingStart` and `layout_marginStart`. *NOTE*: If your `minSdkVersion` is less than 17, you should add *both* the older left/right attributes *as well as* the new start/right attributes. On older platforms, where RTL is not supported and the start/right attributes are unknown and therefore ignored, you need the older left/right attributes. There is a separate lint check which catches that type of error.
+(Note: For `Gravity#LEFT` and `Gravity#START`, you can use these constants even when targeting older platforms, because the `start` bitmask is a superset of the `left` bitmask. Therefore, you can use `gravity=&quot;start&quot;` rather than `gravity=&quot;left|start&quot;`.)"
+        errorLine1="        android:layout_toLeftOf=&quot;@+id/menuButton&quot;"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="/Volumes/Secundary/Projects/Vodafone/OneNet/VirtualKeypad/libraries/SimpleComputer/src/main/res/layout/main.xml"
+            line="27"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="RtlHardcoded"
+        severity="Warning"
+        message="Consider adding `android:layout_alignParentEnd=&quot;true&quot;` to better support right-to-left layouts"
+        category="Bi-directional Text"
+        priority="5"
+        summary="Using left/right instead of start/end attributes"
+        explanation="Using `Gravity#LEFT` and `Gravity#RIGHT` can lead to problems when a layout is rendered in locales where text flows from right to left. Use `Gravity#START` and `Gravity#END` instead. Similarly, in XML `gravity` and `layout_gravity` attributes, use `start` rather than `left`.
+For XML attributes such as paddingLeft and `layout_marginLeft`, use `paddingStart` and `layout_marginStart`. *NOTE*: If your `minSdkVersion` is less than 17, you should add *both* the older left/right attributes *as well as* the new start/right attributes. On older platforms, where RTL is not supported and the start/right attributes are unknown and therefore ignored, you need the older left/right attributes. There is a separate lint check which catches that type of error.
+(Note: For `Gravity#LEFT` and `Gravity#START`, you can use these constants even when targeting older platforms, because the `start` bitmask is a superset of the `left` bitmask. Therefore, you can use `gravity=&quot;start&quot;` rather than `gravity=&quot;left|start&quot;`.)"
+        errorLine1="        android:layout_alignParentRight=&quot;true&quot;"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="/Volumes/Secundary/Projects/Vodafone/OneNet/VirtualKeypad/libraries/SimpleComputer/src/main/res/layout/main.xml"
+            line="36"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="RtlHardcoded"
+        severity="Warning"
+        message="Consider adding `android:layout_toEndOf=&quot;@+id/menuButton&quot;` to better support right-to-left layouts"
+        category="Bi-directional Text"
+        priority="5"
+        summary="Using left/right instead of start/end attributes"
+        explanation="Using `Gravity#LEFT` and `Gravity#RIGHT` can lead to problems when a layout is rendered in locales where text flows from right to left. Use `Gravity#START` and `Gravity#END` instead. Similarly, in XML `gravity` and `layout_gravity` attributes, use `start` rather than `left`.
+For XML attributes such as paddingLeft and `layout_marginLeft`, use `paddingStart` and `layout_marginStart`. *NOTE*: If your `minSdkVersion` is less than 17, you should add *both* the older left/right attributes *as well as* the new start/right attributes. On older platforms, where RTL is not supported and the start/right attributes are unknown and therefore ignored, you need the older left/right attributes. There is a separate lint check which catches that type of error.
+(Note: For `Gravity#LEFT` and `Gravity#START`, you can use these constants even when targeting older platforms, because the `start` bitmask is a superset of the `left` bitmask. Therefore, you can use `gravity=&quot;start&quot;` rather than `gravity=&quot;left|start&quot;`.)"
+        errorLine1="        android:layout_toRightOf=&quot;@+id/menuButton&quot;"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="/Volumes/Secundary/Projects/Vodafone/OneNet/VirtualKeypad/libraries/SimpleComputer/src/main/res/layout/main.xml"
+            line="37"
+            column="9"/>
+    </issue>
+
+</issues>

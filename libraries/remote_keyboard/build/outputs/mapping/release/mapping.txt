@@ -1,0 +1,16 @@
+com.rekap.remote.SeekBarPreference -> com.rekap.remote.SeekBarPreference:
+    android.widget.SeekBar mSeekBar -> a
+    android.widget.TextView mSplashText -> b
+    android.widget.TextView mValueText -> c
+    android.content.Context mContext -> d
+    java.lang.String mDialogMessage -> e
+    java.lang.String mSuffix -> f
+    int mDefault -> g
+    int mMax -> h
+    int mValue -> i
+    android.view.View onCreateDialogView() -> onCreateDialogView
+    void onBindDialogView(android.view.View) -> onBindDialogView
+    void onSetInitialValue(boolean,java.lang.Object) -> onSetInitialValue
+    void onProgressChanged(android.widget.SeekBar,int,boolean) -> onProgressChanged
+    void onStartTrackingTouch(android.widget.SeekBar) -> onStartTrackingTouch
+    void onStopTrackingTouch(android.widget.SeekBar) -> onStopTrackingTouch
