@@ -6,6 +6,10 @@
     android:background="#00F000"
     android:orientation="horizontal"
     android:padding="8dp">
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_weight="0.10"/>
 
     <TextView
         android:id="@+id/pid"
@@ -18,14 +22,14 @@
         android:id="@+id/memory"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="0.15"
+        android:layout_weight="0.20"
         android:text="@string/process_memory"/>
 
     <TextView
         android:id="@+id/name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="0.70"
+        android:layout_weight="0.45"
         android:text="@string/process_name"
         />
 

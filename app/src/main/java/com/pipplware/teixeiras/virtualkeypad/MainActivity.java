@@ -218,5 +218,108 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         }
     }
 
+    @Override
+    protected void onNewIntent(Intent intent) {
+        setIntent(intent);
+        addFromIntent();
+    }
 
+
+
+    /**
+     * If required, add torrents from the supplied intent extras.
+     */
+    protected void addFromIntent() {
+        Intent intent = getIntent();
+        Uri dataUri = intent.getData();
+        String data = intent.getDataString();
+        String action = intent.getAction();
+
+        /*
+        // Adding multiple torrents at the same time (as found in the Intent extras Bundle)
+        if (action != null && action.equals("org.transdroid.ADD_MULTIPLE")) {
+            // Intent should have some extras pointing to possibly multiple torrents
+            String[] urls = intent.getStringArrayExtra("TORRENT_URLS");
+            String[] titles = intent.getStringArrayExtra("TORRENT_TITLES");
+            if (urls != null) {
+                for (int i = 0; i < urls.length; i++) {
+                  /*  String title = (titles != null && titles.length >= i ? titles[i] : NavigationHelper
+                            .extractNameFromUri(Uri.parse(urls[i])));
+                    if (intent.hasExtra("PRIVATE_SOURCE")) {
+                        // This is marked by the Search Module as being a private source site; get the url locally first
+                        addTorrentFromPrivateSource(urls[i], title, intent.getStringExtra("PRIVATE_SOURCE"));
+                    } else {
+                        addTorrentByUrl(urls[i], title);
+                    }
+                }
+            }
+            return;
+        }
+
+        // Add a torrent from a local or remote data URI?
+        if (dataUri == null)
+            return;
+        if (dataUri.getScheme() == null) {
+            //Crouton.showText(this, R.string.error_invalid_url_form, NavigationHelper.CROUTON_ERROR_STYLE);
+            return;
+        }
+
+        // Get torrent title
+        String title = NavigationHelper.extractNameFromUri(dataUri);
+        if (intent.hasExtra("TORRENT_TITLE")) {
+            title = intent.getStringExtra("TORRENT_TITLE");
+        }
+
+        // Adding a torrent from the Android downloads manager
+        if (dataUri.getScheme().equals(ContentResolver.SCHEME_CONTENT)) {
+            addTorrentFromDownloads(dataUri, title);
+            return;
+        }
+
+        // Adding a torrent from http or https URL
+        if (dataUri.getScheme().equals("http") || dataUri.getScheme().equals("https")) {
+
+            String privateSource = getIntent().getStringExtra("PRIVATE_SOURCE");
+
+            WebsearchSetting match = null;
+            if (privateSource == null) {
+                // Check if the target URL is also defined as a web search in the user's settings
+                List<WebsearchSetting> websearches = applicationSettings.getWebsearchSettings();
+                for (WebsearchSetting setting : websearches) {
+                    Uri uri = Uri.parse(setting.getBaseUrl());
+                    if (uri.getHost() != null && uri.getHost().equals(dataUri.getHost())) {
+                        match = setting;
+                        break;
+                    }
+                }
+            }
+
+            // If the URL is also a web search and it defines cookies, use the cookies by downloading the targeted
+            // torrent file (while supplies the cookies to the HTTP request) instead of sending the URL directly to the
+            // torrent client. If instead it is marked (by the Torrent Search module) as being form a private site, use
+            // the Search Module instead to download the url locally first.
+            if (match != null && match.getCookies() != null) {
+                addTorrentFromWeb(data, match, title);
+            } else if (privateSource != null) {
+                addTorrentFromPrivateSource(data, title, privateSource);
+            } else {
+                // Normally send the URL to the torrent client
+                addTorrentByUrl(data, title);
+            }
+            return;
+        }
+
+        // Adding a torrent from magnet URL
+        if (dataUri.getScheme().equals("magnet")) {
+            addTorrentByMagnetUrl(data, title);
+            return;
+        }
+
+        // Adding a local .torrent file; the title we show is just the file name
+        if (dataUri.getScheme().equals("file")) {
+            addTorrentByFile(data, title);
+            return;
+        }*/
+
+    }
 }
