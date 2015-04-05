@@ -50,5 +50,7 @@
     <string name="process_pid">PID</string>
     <string name="process_memory">RAM</string>
     <string name="process_name">Nome</string>
+    <string name="authentication_failed">Autenticação falhou</string>
+    <string name="server_password">Password:</string>
 
 </resources>

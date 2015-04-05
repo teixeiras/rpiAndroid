@@ -10,6 +10,8 @@ import android.content.SharedPreferences;
 public class Preferences {
     static String PREFERENCE_IP = "ip";
     static String PREFERENCE_PORT = "port";
+    static String PREFERENCE_PASSWORD = "password";
+
 
     static SharedPreferences prefs;
     static Preferences self;

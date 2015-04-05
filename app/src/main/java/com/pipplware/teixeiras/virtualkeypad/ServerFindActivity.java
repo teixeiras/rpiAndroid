@@ -47,11 +47,7 @@ public class ServerFindActivity extends FragmentActivity implements NDSService.C
     }
 
     public void onClickButton(View view) {
-        String a = ((EditText) findViewById(R.id.server_find_manual_ip_a)).getText().toString();
-        String b = ((EditText) findViewById(R.id.server_find_manual_ip_b)).getText().toString();
-        String c = ((EditText) findViewById(R.id.server_find_manual_ip_c)).getText().toString();
-        String d = ((EditText) findViewById(R.id.server_find_manual_ip_d)).getText().toString();
-        String ip = a + "." + b + "." + c + "." + d;
+        String ip = ((EditText) findViewById(R.id.server_find_manual_ip)).getText().toString();
         String port = ((EditText) findViewById(R.id.server_find_manual_ip_port)).getText().toString();
         nextActivityWithIp(ip, port);
     }
@@ -61,6 +57,7 @@ public class ServerFindActivity extends FragmentActivity implements NDSService.C
     public void couldConnectToRemoteServer(final String server, final String port) {
         Preferences.sharedInstance(this).edit().putString(Preferences.PREFERENCE_IP, server).apply();
         Preferences.sharedInstance(this).edit().putString(Preferences.PREFERENCE_PORT, port).apply();
+        Preferences.sharedInstance(this).edit().putString(Preferences.PREFERENCE_PASSWORD, NetworkRequest.password).apply();
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -92,6 +89,22 @@ public class ServerFindActivity extends FragmentActivity implements NDSService.C
         });
 
     }
+    @Override
+    public void errorAuthenticationToRemoteServer(final String server, final String port) {
+        Log.d("CONNECTION", "Could not connect to server");
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                progress.hide();
+
+                TextView view = (TextView) findViewById(R.id.server_error);
+                view.setText(R.string.authentication_failed);
+                view.setAnimation(animFadeIn);
+
+                view.setVisibility(View.VISIBLE);
+            }
+        });
+    }
 
     private void nextActivityWithIp(final NDSService.Server server) {
 
@@ -103,9 +116,10 @@ public class ServerFindActivity extends FragmentActivity implements NDSService.C
 
                     TextView view = (TextView) findViewById(R.id.server_error);
                     view.setAnimation(animFadeOut);
-
                     view.setVisibility(View.GONE);
 
+                    EditText password = ((EditText) findViewById(R.id.server_password));
+                    NetworkRequest.password = password.getText().toString();
                     NetworkRequest.isURLReachable(ServerFindActivity.this, server.ip, server.port, ServerFindActivity.this);
                 } catch (Exception e) {
 
@@ -126,6 +140,8 @@ public class ServerFindActivity extends FragmentActivity implements NDSService.C
                 view.setAnimation(animFadeOut);
                 view.setVisibility(View.GONE);
 
+                EditText password = ((EditText) findViewById(R.id.server_password));
+                NetworkRequest.password = password.getText().toString();
                 NetworkRequest.isURLReachable(ServerFindActivity.this, ip, port, ServerFindActivity.this);
 
             }
@@ -159,23 +175,16 @@ public class ServerFindActivity extends FragmentActivity implements NDSService.C
         updatedData();
 
 
-        EditText a = ((EditText) findViewById(R.id.server_find_manual_ip_a));
-        EditText b = ((EditText) findViewById(R.id.server_find_manual_ip_b));
-        EditText c = ((EditText) findViewById(R.id.server_find_manual_ip_c));
-        EditText d = ((EditText) findViewById(R.id.server_find_manual_ip_d));
-
+        EditText ipInput = ((EditText) findViewById(R.id.server_find_manual_ip));
         EditText port = ((EditText) findViewById(R.id.server_find_manual_ip_port));
+        EditText password = ((EditText) findViewById(R.id.server_password));
 
-        /*if (Preferences.sharedInstance(this).getString(Preferences.PREFERENCE_IP, "").length() > 0) {
-            String ip[] = Preferences.sharedInstance(this).getString(Preferences.PREFERENCE_IP, "").split(".");;
-            a.setText(ip[0]);
-            b.setText(ip[1]);
-            c.setText(ip[2]);
-            d.setText(ip[3]);
+        if (Preferences.sharedInstance(this).getString(Preferences.PREFERENCE_IP, "").length() > 0) {
 
+            ipInput.setText(Preferences.sharedInstance(this).getString(Preferences.PREFERENCE_IP, ""));
             port.setText(Preferences.sharedInstance(this).getString(Preferences.PREFERENCE_PORT, ""));
-
-        }*/
+            password.setText(Preferences.sharedInstance(this).getString(Preferences.PREFERENCE_PASSWORD, ""));
+        }
 
     }
 

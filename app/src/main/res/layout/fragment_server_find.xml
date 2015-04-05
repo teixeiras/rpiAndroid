@@ -1,5 +1,4 @@
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -29,11 +28,43 @@
             android:layout_below="@id/server_find_manual_ip_title"
             android:text="@string/server_find_area" />
 
+        <LinearLayout
+            android:id="@+id/server_password_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/server_find_description"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/server_password"
+                android:textStyle="normal" />
+
+            <EditText
+                android:id="@+id/server_password"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:inputType="textPassword"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:singleLine="true"
+                android:imeOptions="actionNext"
+                android:nextFocusLeft="@+id/server_find_manual_ip"
+                android:nextFocusDown="@+id/server_find_manual_ip"/>
+
+            />
+
+
+        </LinearLayout>
+
+
         <RelativeLayout
             android:id="@+id/manual_login_area"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/server_find_description">
+            android:layout_below="@+id/server_password_layout">
 
             <TextView
                 android:id="@+id/server_find_manual_ip_label"
@@ -50,7 +81,7 @@
                 android:layout_below="@id/server_find_manual_ip_label"
                 android:textColor="@color/red"
                 android:textStyle="bold"
-                android:visibility="gone"/>
+                android:visibility="gone" />
 
             <LinearLayout
                 android:id="@+id/manual_ip_input"
@@ -60,52 +91,28 @@
                 android:orientation="horizontal">
 
                 <EditText
-                    android:id="@+id/server_find_manual_ip_a"
-                    android:layout_width="50dp"
+                    android:id="@id/server_find_manual_ip"
+                    android:layout_width="0dp"
                     android:layout_height="50dp"
-                    android:gravity="center"
-                    android:inputType="number"
-                    android:maxLength="3"
+                    android:layout_weight="1"
                     android:paddingLeft="5dp"
-                    android:paddingRight="5dp" />
-
-                <EditText
-                    android:id="@+id/server_find_manual_ip_b"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:gravity="center"
-                    android:inputType="number"
-                    android:maxLength="3"
-                    android:paddingLeft="5dp"
-                    android:paddingRight="5dp" />
-
-                <EditText
-                    android:id="@+id/server_find_manual_ip_c"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:gravity="center"
-                    android:inputType="number"
-                    android:maxLength="3"
-                    android:paddingLeft="5dp"
-                    android:paddingRight="5dp" />
-
-                <EditText
-                    android:id="@+id/server_find_manual_ip_d"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:gravity="center"
-                    android:inputType="number"
-                    android:maxLength="3"
-                    android:paddingLeft="5dp" />
+                    android:paddingRight="5dp"
+                    android:maxLines="1"
+                    android:lines="1"
+                    android:singleLine="true"
+                    android:imeOptions="actionNext"
+                    android:nextFocusLeft="@+id/server_find_manual_ip_port"
+                    android:nextFocusDown="@+id/server_find_manual_ip_port"/>
 
                 <TextView
+                    android:id="@+id/server_find_manual_port_separator"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/server_find_manual_port_separator" />
 
 
                 <EditText
-                    android:id="@+id/server_find_manual_ip_port"
+                    android:id="@id/server_find_manual_ip_port"
                     android:layout_width="55dp"
                     android:layout_height="50dp"
                     android:gravity="center"
