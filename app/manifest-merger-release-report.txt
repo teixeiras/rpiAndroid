@@ -114,11 +114,11 @@ ADDED from AndroidManifest.xml:152:9
 		ADDED from AndroidManifest.xml:153:13
 	android:logo
 		ADDED from AndroidManifest.xml:157:13
-service#com.pipplware.teixeiras.virtualkeypad.services.NDSService
+service#services.NDSService
 ADDED from AndroidManifest.xml:160:9
 	android:name
 		ADDED from AndroidManifest.xml:160:18
-service#com.pipplware.teixeiras.virtualkeypad.services.PSUtilService
+service#services.PSUtilService
 ADDED from AndroidManifest.xml:184:9
 	android:exported
 		ADDED from AndroidManifest.xml:187:13

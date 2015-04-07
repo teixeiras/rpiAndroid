@@ -4,7 +4,8 @@ import android.content.Context;
 import android.inputmethodservice.Keyboard;
 import android.util.AttributeSet;
 
-import com.pipplware.teixeiras.virtualkeypad.network.NetworkRequest;
+
+import com.pipplware.teixeiras.network.NetworkRequest;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;

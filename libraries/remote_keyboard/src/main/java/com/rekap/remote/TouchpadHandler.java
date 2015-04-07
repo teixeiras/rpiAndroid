@@ -1,10 +1,10 @@
 package com.rekap.remote;
 
-import com.rekap.network.NetInput;
-
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
+
+import com.pipplware.teixeiras.network.NetInput;
 
 public class TouchpadHandler implements OnTouchListener {
 	float lastX, lastY, lastScrollY, originX, originY;

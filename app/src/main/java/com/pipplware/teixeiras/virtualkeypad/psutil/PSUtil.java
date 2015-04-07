@@ -18,20 +18,13 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ExpandableListView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
-import android.widget.Spinner;
 
+import com.pipplware.teixeiras.network.models.PS;
+import com.pipplware.teixeiras.services.PSUtilService;
 import com.pipplware.teixeiras.virtualkeypad.R;
-import com.pipplware.teixeiras.virtualkeypad.keyboard.KeyboardGamepadFragment;
-import com.pipplware.teixeiras.virtualkeypad.keyboard.KeyboardNormalFragment;
-import com.pipplware.teixeiras.virtualkeypad.network.NetworkRequest;
-import com.pipplware.teixeiras.virtualkeypad.network.models.PS;
-import com.pipplware.teixeiras.virtualkeypad.services.PSUtilService;
+
 
 import org.achartengine.ChartFactory;
 import org.achartengine.GraphicalView;
@@ -42,10 +35,8 @@ import org.achartengine.model.XYMultipleSeriesDataset;
 import org.achartengine.model.XYSeries;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
 import org.achartengine.renderer.XYSeriesRenderer;
-import org.apache.http.NameValuePair;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**

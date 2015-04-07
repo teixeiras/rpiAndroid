@@ -1,15 +1,10 @@
 package com.rekap.remote;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -19,8 +14,8 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
 
-import com.rekap.network.NetInput;
-import com.rekap.network.Network;
+import com.pipplware.teixeiras.network.NetInput;
+
 
 public class RemoteKeyboardFragment extends Fragment{
 
@@ -44,17 +39,9 @@ public class RemoteKeyboardFragment extends Fragment{
                 public void onClick(DialogInterface dialog, int which) {
                     switch(which) {
                     case 0:
-                        startActivity(new Intent(getActivity().getBaseContext(), Preferences.class));
-                        break;
-
-                    case 1:
                         InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
                         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
                         imm.showSoftInput(layout, InputMethodManager.SHOW_FORCED);
-                        break;
-
-                    case 2:
-                        Network.Connect(Globals.Server);
                         break;
                     }
                 }
@@ -97,25 +84,7 @@ public class RemoteKeyboardFragment extends Fragment{
         rightClick.setOnClickListener(rightEvent);
         menuClick.setOnClickListener(menuEvent);
 
-        loadPreferences();
-        Network.LocatorStart();
 
-        loadPreferences();
     }
 
-    public void loadPreferences()
-    {
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity().getBaseContext());
-
-        Globals.AutoConnect = prefs.getBoolean(Globals.AUTOCONNECT, true);
-        Globals.FirstRun = prefs.getBoolean(Globals.FIRSTRUN, true);
-        Globals.Sensitivity = ((float)(prefs.getInt(Globals.SENSITIVITY, 50) + 20)) / 100;
-        Globals.Server = prefs.getString(Globals.SERVER, "First");
-
-        if (Globals.FirstRun) {
-            SharedPreferences.Editor editor = prefs.edit();
-            editor.putBoolean(Globals.FIRSTRUN, false);
-            editor.commit();
-        }
-    }
 }

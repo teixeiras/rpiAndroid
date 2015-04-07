@@ -157,7 +157,6 @@
             android:logo="@drawable/logo_pipplware">
         </activity>
 
-        <service android:name=".services.NDSService" />
 
         <intent-filter>
             <action android:name="android.intent.action.VIEW" />
@@ -181,11 +180,6 @@
                 android:scheme="http" />
         </intent-filter>
 
-        <service
-            android:name=".services.PSUtilService"
-            android:enabled="true"
-            android:exported="true" >
-        </service>
 
         <activity
             android:name=".SplashActivity"

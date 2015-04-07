@@ -17,7 +17,7 @@ import android.view.MenuItem;
 import com.pipplware.teixeiras.virtualkeypad.keyboard.KeyboardFragment;
 import com.pipplware.teixeiras.virtualkeypad.psutil.PSUtil;
 import com.pipplware.teixeiras.virtualkeypad.torrents.TorrentFragment;
-import com.rekap.network.NetInput;
+import com.pipplware.teixeiras.network.NetInput;
 
 import java.util.Locale;
 
@@ -27,12 +27,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         PSUtil.OnFragmentInteractionListener, TorrentFragment.OnFragmentInteractionListener {
 
     public static int RESULT_IP = 1;
-
-    public static String EXTRA_IP = "ip";
-    public static String EXTRA_PORT = "port";
-
-    public static String ip;
-    public static String port;
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -192,8 +186,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         if (requestCode == RESULT_IP) {
             // Make sure the request was successful
             if (resultCode == RESULT_OK) {
-                ip = data.getStringExtra(EXTRA_IP);
-                port = data.getStringExtra(EXTRA_PORT);
+
             }
         }
     }

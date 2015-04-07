@@ -21,8 +21,8 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.pipplware.teixeiras.virtualkeypad.network.NetworkRequest;
-import com.pipplware.teixeiras.virtualkeypad.services.NDSService;
+import com.pipplware.teixeiras.network.NetworkRequest;
+import com.pipplware.teixeiras.services.NDSService;
 
 
 public class ServerFindActivity extends FragmentActivity implements NDSService.CallBack, NetworkRequest.URLReachableCallBack {
@@ -62,8 +62,8 @@ public class ServerFindActivity extends FragmentActivity implements NDSService.C
             @Override
             public void run() {
                 Intent returnIntent = new Intent();
-                returnIntent.putExtra(MainActivity.EXTRA_IP, server);
-                returnIntent.putExtra(MainActivity.EXTRA_PORT, port);
+                NetworkRequest.ip = server;
+                NetworkRequest.port = port;
                 setResult(RESULT_OK, returnIntent);
                 finish();
 

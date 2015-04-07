@@ -9,8 +9,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 
+import com.pipplware.teixeiras.network.NetworkRequest;
 import com.pipplware.teixeiras.virtualkeypad.R;
-import com.pipplware.teixeiras.virtualkeypad.network.NetworkRequest;
 
 import org.apache.http.NameValuePair;
 
