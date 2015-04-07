@@ -1,6 +1,10 @@
 package com.pipplware.teixeiras.virtualkeypad;
 
+import android.app.AlertDialog;
+import android.content.ContentResolver;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Network;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,21 +14,54 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Base64;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.pipplware.teixeiras.network.JSonRequest;
+import com.pipplware.teixeiras.network.NetworkRequest;
+import com.pipplware.teixeiras.network.NetworkService;
+import com.pipplware.teixeiras.network.WebSocketService;
+import com.pipplware.teixeiras.network.models.Info;
+import com.pipplware.teixeiras.network.models.Torrents;
 import com.pipplware.teixeiras.virtualkeypad.keyboard.KeyboardFragment;
 import com.pipplware.teixeiras.virtualkeypad.psutil.PSUtil;
 import com.pipplware.teixeiras.virtualkeypad.torrents.TorrentFragment;
 import com.pipplware.teixeiras.network.NetInput;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.cookie.BasicClientCookie;
+import org.apache.http.message.BasicNameValuePair;
+
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+import java.util.logging.Handler;
+
+import de.keyboardsurfer.android.widget.crouton.Crouton;
 
 
 public class MainActivity extends ActionBarActivity implements ActionBar.TabListener,
         KeyboardFragment.OnFragmentInteractionListener,
-        PSUtil.OnFragmentInteractionListener, TorrentFragment.OnFragmentInteractionListener {
+        PSUtil.OnFragmentInteractionListener, TorrentFragment.OnFragmentInteractionListener,
+        CreditsFragment.OnFragmentInteractionListener, JSonRequest.JSonRequestCallback<Info>,
+        WebSocketService.Callback{
 
     public static int RESULT_IP = 1;
 
@@ -106,6 +143,9 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Intent preferences= new Intent(this, PreferencesActivity.class);
+            startActivity(preferences);
+
             return true;
         }
 
@@ -132,6 +172,9 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
     }
 
+
+
+
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
@@ -153,6 +196,8 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                     return new PSUtil();
                 case 2:
                     return new TorrentFragment();
+                case 3:
+                    return new CreditsFragment();
 
             }
             return null;
@@ -161,7 +206,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 3;
+            return 4;
         }
 
         @Override
@@ -174,6 +219,8 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                     return getString(R.string.title_section2).toUpperCase(l);
                 case 2:
                     return getString(R.string.title_section3).toUpperCase(l);
+                case 3:
+                    return getString(R.string.title_section4).toUpperCase(l);
 
             }
             return null;
@@ -181,12 +228,39 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     }
 
 
+    protected void connectionStart(){
+        try{
+            new JSonRequest<>(MainActivity.this,Info.class, NetworkRequest.address()+"/info");
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    @Override
+    public void onJSonRequestResponse(JSonRequest<Info> request, Info response) {
+        NetworkRequest.info = response;
+        WebSocketService socket = new WebSocketService(this);
+        socket.connectWebSocket();
+        NetworkRequest.service = socket;
+
+    }
+
+    @Override
+    public void jsonRequesFailed(JSonRequest<Info> request) {
+
+    }
+
+    @Override
+    public void onMessage(String s) {
+        Log.d("WEBSOCKET", s);
+    }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == RESULT_IP) {
             // Make sure the request was successful
             if (resultCode == RESULT_OK) {
-
+                connectionStart();
             }
         }
     }
@@ -211,6 +285,28 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         }
     }
 
+
+    public void requestAuthorizationToAddTorrent(String title,final Runnable onYesRunnable) {
+        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which){
+                    case DialogInterface.BUTTON_POSITIVE:
+                        new Thread(onYesRunnable).start();
+
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        //No button clicked
+                        break;
+                }
+            }
+        };
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
+        builder.setMessage("Are you sure?")
+                .setPositiveButton("Yes", dialogClickListener)
+                .setNegativeButton("No", dialogClickListener)
+                .show();
+    }
     @Override
     protected void onNewIntent(Intent intent) {
         setIntent(intent);
@@ -218,7 +314,49 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     }
 
 
+    private static String getQueryParameter(Uri uri, String parameter) {
+        int start = uri.toString().indexOf(parameter + "=");
+        if (start >= 0) {
+            int begin = start + (parameter + "=").length();
+            int end = uri.toString().indexOf("&", begin);
+            return uri.toString().substring(begin, end >= 0 ? end : uri.toString().length());
+        }
+        return null;
+    }
 
+    public static String extractNameFromUri(Uri rawTorrentUri) {
+
+        if (rawTorrentUri.getScheme() == null) {
+            // Probably an incorrect URI; just return the whole thing
+            return rawTorrentUri.toString();
+        }
+
+        if (rawTorrentUri.getScheme().equals("magnet")) {
+            // Magnet links might have a dn (display name) parameter
+            String dn = getQueryParameter(rawTorrentUri, "dn");
+            if (dn != null && !dn.equals("")) {
+                return dn;
+            }
+            // If not, try to return the hash that is specified as xt (exact topci)
+            String xt = getQueryParameter(rawTorrentUri, "xt");
+            if (xt != null && !xt.equals("")) {
+                return xt;
+            }
+        }
+
+        if (rawTorrentUri.isHierarchical()) {
+            String path = rawTorrentUri.getPath();
+            if (path != null) {
+                if (path.contains("/")) {
+                    path = path.substring(path.lastIndexOf("/"));
+                }
+                return path;
+            }
+        }
+
+        // No idea what to do with this; return as is
+        return rawTorrentUri.toString();
+    }
     /**
      * If required, add torrents from the supplied intent extras.
      */
@@ -228,7 +366,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         String data = intent.getDataString();
         String action = intent.getAction();
 
-        /*
+
         // Adding multiple torrents at the same time (as found in the Intent extras Bundle)
         if (action != null && action.equals("org.transdroid.ADD_MULTIPLE")) {
             // Intent should have some extras pointing to possibly multiple torrents
@@ -236,14 +374,10 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             String[] titles = intent.getStringArrayExtra("TORRENT_TITLES");
             if (urls != null) {
                 for (int i = 0; i < urls.length; i++) {
-                  /*  String title = (titles != null && titles.length >= i ? titles[i] : NavigationHelper
-                            .extractNameFromUri(Uri.parse(urls[i])));
-                    if (intent.hasExtra("PRIVATE_SOURCE")) {
-                        // This is marked by the Search Module as being a private source site; get the url locally first
-                        addTorrentFromPrivateSource(urls[i], title, intent.getStringExtra("PRIVATE_SOURCE"));
-                    } else {
-                        addTorrentByUrl(urls[i], title);
-                    }
+                    String title = (titles != null && titles.length >= i ? titles[i] :
+                            extractNameFromUri(Uri.parse(urls[i])));
+                     addTorrentByUrl(urls[i], title);
+
                 }
             }
             return;
@@ -258,7 +392,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         }
 
         // Get torrent title
-        String title = NavigationHelper.extractNameFromUri(dataUri);
+        String title = extractNameFromUri(dataUri);
         if (intent.hasExtra("TORRENT_TITLE")) {
             title = intent.getStringExtra("TORRENT_TITLE");
         }
@@ -274,31 +408,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
             String privateSource = getIntent().getStringExtra("PRIVATE_SOURCE");
 
-            WebsearchSetting match = null;
-            if (privateSource == null) {
-                // Check if the target URL is also defined as a web search in the user's settings
-                List<WebsearchSetting> websearches = applicationSettings.getWebsearchSettings();
-                for (WebsearchSetting setting : websearches) {
-                    Uri uri = Uri.parse(setting.getBaseUrl());
-                    if (uri.getHost() != null && uri.getHost().equals(dataUri.getHost())) {
-                        match = setting;
-                        break;
-                    }
-                }
-            }
-
-            // If the URL is also a web search and it defines cookies, use the cookies by downloading the targeted
-            // torrent file (while supplies the cookies to the HTTP request) instead of sending the URL directly to the
-            // torrent client. If instead it is marked (by the Torrent Search module) as being form a private site, use
-            // the Search Module instead to download the url locally first.
-            if (match != null && match.getCookies() != null) {
-                addTorrentFromWeb(data, match, title);
-            } else if (privateSource != null) {
-                addTorrentFromPrivateSource(data, title, privateSource);
-            } else {
-                // Normally send the URL to the torrent client
-                addTorrentByUrl(data, title);
-            }
+            addTorrentByUrl(data, title);
             return;
         }
 
@@ -312,7 +422,89 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         if (dataUri.getScheme().equals("file")) {
             addTorrentByFile(data, title);
             return;
-        }*/
+        }
 
     }
+
+    public void addTorrentByMagnetUrl(String url, String title) {
+
+
+        // Since v39 Chrome sends application/x-www-form-urlencoded magnet links and most torrent clients do not understand those, so decode first
+        try {
+            url = URLDecoder.decode(url, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            // Ignore: UTF-8 is always available on Android devices
+        }
+        final String value = url;
+        requestAuthorizationToAddTorrent(title, new Runnable() {
+            @Override
+            public void run() {
+                List<NameValuePair> list = new ArrayList<>();
+                list.add(new BasicNameValuePair("uri", value));
+                NetworkRequest.makeRequest("transmission_add", list);
+            }
+        });
+
+    }
+
+    protected void addTorrentByFile(final String localFile, String title) {
+        try {
+            addTorrentFromStream(new FileInputStream(localFile), title);
+        }catch(Exception e) {
+
+        }
+    }
+
+    private void addTorrentFromDownloads(final Uri contentUri, String title) {
+        try {
+            addTorrentFromStream(getContentResolver().openInputStream(contentUri), title);
+        }catch(Exception e) {
+
+        }
+    }
+
+
+    protected void addTorrentFromStream(final InputStream input, String title) {
+
+        requestAuthorizationToAddTorrent(title, new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    InputStream inputStream =  input;//You can get an inputStream using any IO API
+                    byte[] bytes;
+                    byte[] buffer = new byte[8192];
+                    int bytesRead;
+                    ByteArrayOutputStream output = new ByteArrayOutputStream();
+                    try {
+                        while ((bytesRead = inputStream.read(buffer)) != -1) {
+                            output.write(buffer, 0, bytesRead);
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    bytes = output.toByteArray();
+                    String encodedString = Base64.encodeToString(bytes, Base64.DEFAULT);
+                    List<NameValuePair> list = new ArrayList<>();
+                    list.add(new BasicNameValuePair("file", encodedString));
+                    NetworkRequest.makeRequest("transmission_add_file", list);
+                }catch(Exception e) {
+
+                }
+
+            }
+        });
+    }
+
+    public void addTorrentByUrl(final String url, String title) {
+        requestAuthorizationToAddTorrent(title, new Runnable() {
+            @Override
+            public void run() {
+                List<NameValuePair> list = new ArrayList<>();
+                list.add(new BasicNameValuePair("uri", url));
+                NetworkRequest.makeRequest("transmission_add", list);
+            }
+        });
+
+    }
+
 }

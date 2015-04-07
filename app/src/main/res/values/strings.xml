@@ -23,12 +23,12 @@
     <string name="boot_to_xbmc">Default to Kodi</string>
     <string name="boot_to_xfce">Default to XFCE</string>
     <string name="terminal">Default to Terminal</string>
-    <string name="server_find_manual_ip_title">Endereço do Servidor</string>
-    <string name="server_find_manual_server">IP manual</string>
+    <string name="server_find_manual_ip_title">IP Address</string>
+    <string name="server_find_manual_server">Manual IP Address</string>
 
     <string-array name="keyboards_list">
         <item>Gamepad</item>
-        <item>Teclado</item>
+        <item>Keyboard</item>
     </string-array>
     <string-array name="command_list">
         <item>@string/reboot_rpi</item>
@@ -44,13 +44,15 @@
     <string name="title_activity_splash">SplashActivity</string>
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">DUMMY\nCONTENT</string>
-    <string name="could_not_connect_server">Não conseguiu encontrar o servidor</string>
-    <string name="title_section4">SSH</string>
+    <string name="could_not_connect_server">Can\'t find the server</string>
+    <string name="title_section4">Credits</string>
     <string name="kill_button">Kill</string>
     <string name="process_pid">PID</string>
     <string name="process_memory">RAM</string>
-    <string name="process_name">Nome</string>
-    <string name="authentication_failed">Autenticação falhou</string>
+    <string name="process_name">Name</string>
+    <string name="authentication_failed">Authentication failed</string>
     <string name="server_password">Password:</string>
+    <string name="autologin">Autologin</string>
+    <string name="title_activity_preferences">Preferences</string>
 
 </resources>

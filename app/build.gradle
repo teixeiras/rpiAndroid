@@ -33,6 +33,7 @@ dependencies {
     compile project(':libraries:remote_keyboard')
     compile project(':libraries:network')
 
+
     compile 'com.android.support:appcompat-v7:22.0.0'
     compile 'org.achartengine:achartengine:1.2.0'
     compile 'com.michaelpardo:activeandroid:3.1.0-SNAPSHOT'

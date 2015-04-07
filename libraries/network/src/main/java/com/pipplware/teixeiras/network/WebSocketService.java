@@ -24,8 +24,12 @@ public class WebSocketService implements NetworkService {
 
         }
 
+    public WebSocketService(Callback callback) {
+        this.callback = callback;
+    }
+
     Callback callback;
-    private void connectWebSocket() {
+    public void connectWebSocket() {
         URI uri;
         try {
             uri = new URI("ws://"+NetworkRequest.ip+":"+NetworkRequest.socketPort);
@@ -66,9 +70,13 @@ public class WebSocketService implements NetworkService {
         JSONStringer vm;
         try {
             vm = new JSONStringer();
+            vm.object().key("action").value(service)
+                    .endObject();
+            JSONStringer vm1 = new JSONStringer();
             for (NameValuePair pair : parameters) {
-                vm.object().key(pair.getName()).value(pair.getValue()).endObject();
+                vm1.object().key(pair.getName()).value(pair.getValue()).endObject();
             }
+            vm.object().key("content").value(vm1).endObject();
             mWebSocketClient.send(vm.toString());
 
         }catch (Exception e) {

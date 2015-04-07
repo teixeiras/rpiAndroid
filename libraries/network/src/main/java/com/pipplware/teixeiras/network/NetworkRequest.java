@@ -7,6 +7,8 @@ import android.util.Base64;
 import android.util.Log;
 
 
+import com.pipplware.teixeiras.network.models.Info;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
@@ -41,6 +43,9 @@ public class NetworkRequest {
     public static String ip;
     public static String port;
     public static String socketPort;
+
+    public static NetworkService service;
+    public static Info info;
 
     public interface URLReachableCallBack {
         public void couldConnectToRemoteServer(final String server, final String port);
