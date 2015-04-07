@@ -1,0 +1,15 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.pipplware.teixeiras.network">
+
+    <application android:allowBackup="true" android:label="@string/app_name"
+        android:icon="@drawable/ic_launcher">
+
+    </application>
+    <service
+        android:name="services.PSUtilService"
+        android:enabled="true"
+        android:exported="true" >
+    </service>
+    <service android:name="services.NDSService" />
+
+</manifest>
