@@ -60,17 +60,21 @@
         </LinearLayout>
 
         <CheckBox
+            android:id="@+id/autlogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/autologin"/>
+            android:text="@string/autologin"
+            android:layout_below="@+id/server_password_layout"/>
+
 
         <RelativeLayout
             android:id="@+id/manual_login_area"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/server_password_layout">
+            android:layout_below="@+id/autlogin">
 
-            <TextView
+
+        <TextView
                 android:id="@+id/server_find_manual_ip_label"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -8,6 +8,7 @@ import com.pipplware.teixeiras.network.NetInput;
 
 
 public class KeypadHandler implements OnKeyListener{
+    
 	public boolean onKey(View v, int keyCode, KeyEvent event) {
 		if (keyCode == KeyEvent.KEYCODE_BACK || keyCode == KeyEvent.KEYCODE_MENU) return false;
 		

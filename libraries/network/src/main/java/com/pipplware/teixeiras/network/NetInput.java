@@ -1,5 +1,7 @@
 package com.pipplware.teixeiras.network;
 
+import android.util.Log;
+
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 
@@ -16,7 +18,12 @@ public final class NetInput {
     public static void SendKeycode(int KeyCode) {
         List<NameValuePair> key = new ArrayList<>();
         key.add(new BasicNameValuePair("key", String.valueOf(KeyCode)));
-        NetworkRequest.service.sendMessage(NetworkService.KEY_SERVICE, key);
+        try {
+            NetworkRequest.service.sendMessage(NetworkService.KEY_SERVICE, key);
+        }catch (Exception e) {
+            Log.d("sd", e.getLocalizedMessage());
+        }
+
     }
 
    public static void SendKeySequence(String Sequence)

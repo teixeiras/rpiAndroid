@@ -42,7 +42,6 @@ public class NetworkRequest {
 
     public static String ip;
     public static String port;
-    public static String socketPort;
 
     public static NetworkService service;
     public static Info info;

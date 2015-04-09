@@ -3,9 +3,12 @@ package com.pipplware.teixeiras.network;
 import android.os.Build;
 import android.util.Log;
 
+import com.pipplware.teixeiras.ConnectionStatus;
+
 import org.apache.http.NameValuePair;
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.handshake.ServerHandshake;
+import org.json.JSONObject;
 import org.json.JSONStringer;
 
 import java.net.URI;
@@ -32,54 +35,81 @@ public class WebSocketService implements NetworkService {
     public void connectWebSocket() {
         URI uri;
         try {
-            uri = new URI("ws://"+NetworkRequest.ip+":"+NetworkRequest.socketPort);
+            uri = new URI("ws://"+NetworkRequest.ip+":"+NetworkRequest.port+"/websocket");
         } catch (URISyntaxException e) {
             e.printStackTrace();
             return;
         }
 
-        mWebSocketClient = new WebSocketClient(uri) {
-            @Override
-            public void onOpen(ServerHandshake serverHandshake) {
-                Log.i("Websocket", "Opened");
-                mWebSocketClient.send("Hello from " + Build.MANUFACTURER + " " + Build.MODEL);
-            }
-
-            @Override
-            public void onMessage(String s) {
-                if (callback != null) {
-                    callback.onMessage(s);
-                }
-            }
-
-            @Override
-            public void onClose(int i, String s, boolean b) {
-                Log.i("Websocket", "Closed " + s);
-            }
-
-            @Override
-            public void onError(Exception e) {
-                Log.i("Websocket", "Error " + e.getMessage());
-            }
-        };
+        mWebSocketClient = new CustomWebSocketClient(uri);
         mWebSocketClient.connect();
     }
 
+    class CustomWebSocketClient extends WebSocketClient
+    {
+        CustomWebSocketClient(URI uri) {
+            super(uri);
+        }
+
+        @Override
+        public void onOpen(ServerHandshake serverHandshake) {
+            ConnectionStatus.sharedInstance().setWebSocketAvailable(true);
+
+            Log.i("Websocket", "Opened");
+        }
+
+        @Override
+        public void onMessage(String s) {
+            if (callback != null) {
+                callback.onMessage(s);
+            }
+        }
+
+        @Override
+        public void onClose(int i, String s, boolean b) {
+            Log.i("Websocket", "Closed " + s);
+            ConnectionStatus.sharedInstance().setWebSocketAvailable(false);
+            try{
+                Thread.sleep(5000);
+            }catch (Exception e) {
+
+            }
+
+            mWebSocketClient = new CustomWebSocketClient(this.uri);
+            mWebSocketClient.connect();
+        }
+
+        @Override
+        public void onError(Exception e) {
+            ConnectionStatus.sharedInstance().setWebSocketAvailable(false);
+            Log.i("Websocket", "Error " + e.getMessage());
+            ConnectionStatus.sharedInstance().setWebSocketAvailable(false);
+            try{
+                Thread.sleep(5000);
+            }catch (Exception f) {
+
+            }
+            mWebSocketClient = new CustomWebSocketClient(this.uri);
+            mWebSocketClient.connect();
+        }
+    }
     @Override
     public void sendMessage(String service, final List<NameValuePair> parameters) {
         JSONStringer vm;
         try {
-            vm = new JSONStringer();
-            vm.object().key("action").value(service)
-                    .endObject();
-            JSONStringer vm1 = new JSONStringer();
+            JSONObject content = new JSONObject();
             for (NameValuePair pair : parameters) {
-                vm1.object().key(pair.getName()).value(pair.getValue()).endObject();
+                content.put(pair.getName(),pair.getValue());
             }
-            vm.object().key("content").value(vm1).endObject();
-            mWebSocketClient.send(vm.toString());
+
+            JSONObject object = new JSONObject();
+            object.put("action", service);
+            object.put("content", content);
+
+            mWebSocketClient.send(object.toString());
 
         }catch (Exception e) {
+            Log.i("Websocket", "Error " + e.getMessage());
 
         }
 

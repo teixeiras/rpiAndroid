@@ -1,6 +1,7 @@
 package com.pipplware.teixeiras.virtualkeypad;
 
 import android.app.AlertDialog;
+import android.content.ClipData;
 import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -14,12 +15,14 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.internal.view.menu.ActionMenuItemView;
 import android.util.Base64;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.pipplware.teixeiras.ConnectionStatus;
 import com.pipplware.teixeiras.network.JSonRequest;
 import com.pipplware.teixeiras.network.NetworkRequest;
 import com.pipplware.teixeiras.network.NetworkService;
@@ -52,6 +55,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.logging.Handler;
 
 import de.keyboardsurfer.android.widget.crouton.Crouton;
@@ -61,7 +66,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         KeyboardFragment.OnFragmentInteractionListener,
         PSUtil.OnFragmentInteractionListener, TorrentFragment.OnFragmentInteractionListener,
         CreditsFragment.OnFragmentInteractionListener, JSonRequest.JSonRequestCallback<Info>,
-        WebSocketService.Callback{
+        WebSocketService.Callback, Observer{
 
     public static int RESULT_IP = 1;
 
@@ -84,7 +89,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         // Set up the action bar.
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
@@ -124,13 +128,15 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
         Intent splashScreen = new Intent(this, SplashActivity.class);
         startActivity(splashScreen);
+
+        ConnectionStatus.sharedInstance().addObserver(this);
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_server_find, menu);
+        getMenuInflater().inflate(R.menu.menu_preferences, menu);
         return true;
     }
 
@@ -229,11 +235,40 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
 
     protected void connectionStart(){
-        try{
-            new JSonRequest<>(MainActivity.this,Info.class, NetworkRequest.address()+"/info");
-        }catch (Exception e) {
-            e.printStackTrace();
+        new Thread(new Runnable(){
+
+            @Override
+            public void run() {
+                try{
+                    new JSonRequest<>(MainActivity.this,Info.class, NetworkRequest.address()+"/info");
+                }catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+
+
+    }
+
+    @Override
+    public void update(Observable observable, Object data) {
+        if (observable instanceof ConnectionStatus) {
+            final ActionMenuItemView item = (ActionMenuItemView) findViewById(R.id.ic_action_socket_connection);
+            this.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    if (ConnectionStatus.sharedInstance().isWebSocketAvailable()) {
+                        item.setIcon(getResources().getDrawable(R.drawable.online));
+                    } else {
+                        item.setIcon(getResources().getDrawable(R.drawable.offline));
+                    }
+                }
+            });
         }
+
+
+
+
 
     }
 
@@ -248,7 +283,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
 
     @Override
     public void jsonRequesFailed(JSonRequest<Info> request) {
-
+        Log.d("s","sdds");
     }
 
     @Override
@@ -269,6 +304,8 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     public boolean dispatchKeyEvent(KeyEvent event) {
         int action = event.getAction();
         int keyCode = event.getKeyCode();
+        NetInput.SendKeycode(keyCode);
+
         switch (keyCode) {
             case KeyEvent.KEYCODE_VOLUME_UP:
                 if (action == KeyEvent.ACTION_DOWN) {

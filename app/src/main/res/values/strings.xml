@@ -54,5 +54,6 @@
     <string name="server_password">Password:</string>
     <string name="autologin">Autologin</string>
     <string name="title_activity_preferences">Preferences</string>
+    <string name="ic_action_socket_connection">Websocket</string>
 
 </resources>
