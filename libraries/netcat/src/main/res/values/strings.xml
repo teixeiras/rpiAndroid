@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Simple NetCat</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_state">Status</string>
+    <string name="title_section1">Main</string>
+    <string name="title_section2">Result</string>
+    <string name="label_connect_to">Connect to:</string>
+    <string name="label_connect">Connect</string>
+    <string name="label_listen_on">Listen on:</string>
+    <string name="label_listen">Listen</string>
+    <string name="label_send">Send</string>
+    <string name="label_disconnect">Disconnect</string>
+    <string name="label_copy">Copy</string>
+    <string name="label_share">Share</string>
+    <string name="label_status_idle">Idle</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="action_clear">Clear</string>
+    <string name="default_port">9999</string>
+    <string name="error_disconnect_first">Disconnect or stop listening first</string>
+    <string name="error_host_port_format">host:port format is expected</string>
+    <string name="error_port_format">Digits is expected</string>
+    <string name="label_text_to_send">Text to send:</string>
+    <string name="label_received_text">Received text:</string>
+    <string name="label_tcp_udp">Use UDP instead of TCP</string>
+    <string name="label_udp_tooltip">Send \"~.\" from remote side to disconnect</string>
+
+</resources>

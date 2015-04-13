@@ -15,6 +15,7 @@ public class KeyboardGamepadFragment extends  android.support.v4.app.Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
         Bundle savedInstanceState) {
+
         ViewGroup rootView = (ViewGroup) inflater.inflate(
         R.layout.fragment_keyboard_gamepad, container, false);
 
@@ -25,8 +26,7 @@ public class KeyboardGamepadFragment extends  android.support.v4.app.Fragment {
     public void onResume() {
         super.onResume();
         Keyboard mKeyboard = new Keyboard(this.getActivity(), R.xml.gamepad);
-        KeyboardView keyboardView = (KeyboardView) this.getActivity().findViewById(R.id.keyboard_gamepad);
-        keyboardView.setKeyboard(mKeyboard);
+
 
         //kbd_compact_fn
     }

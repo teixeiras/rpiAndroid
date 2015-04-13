@@ -1,1 +1,1 @@
-include ':app', ':libraries:remote_keyboard', ':libraries:network'
+include ':app', ':libraries:remote_keyboard', ':libraries:network', ':libraries:netcat'

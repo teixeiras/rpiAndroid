@@ -29,7 +29,7 @@ import com.pipplware.teixeiras.network.NetworkService;
 import com.pipplware.teixeiras.network.WebSocketService;
 import com.pipplware.teixeiras.network.models.Info;
 import com.pipplware.teixeiras.network.models.Torrents;
-import com.pipplware.teixeiras.virtualkeypad.keyboard.KeyboardFragment;
+import com.pipplware.teixeiras.virtualkeypad.keyboard.InputGridFragment;
 import com.pipplware.teixeiras.virtualkeypad.psutil.PSUtil;
 import com.pipplware.teixeiras.virtualkeypad.torrents.TorrentFragment;
 import com.pipplware.teixeiras.network.NetInput;
@@ -63,12 +63,12 @@ import de.keyboardsurfer.android.widget.crouton.Crouton;
 
 
 public class MainActivity extends ActionBarActivity implements ActionBar.TabListener,
-        KeyboardFragment.OnFragmentInteractionListener,
         PSUtil.OnFragmentInteractionListener, TorrentFragment.OnFragmentInteractionListener,
         CreditsFragment.OnFragmentInteractionListener, JSonRequest.JSonRequestCallback<Info>,
-        WebSocketService.Callback, Observer{
+        WebSocketService.Callback, Observer {
 
-    public static int RESULT_IP = 1;
+    public final static int RESULT_IP = 1;
+    public final static int RESULT_PREFERNCES = 2;
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -122,8 +122,15 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                             .setText(mSectionsPagerAdapter.getPageTitle(i))
                             .setTabListener(this));
         }
-        Intent serverFind = new Intent(this, ServerFindActivity.class);
-        startActivityForResult(serverFind, RESULT_IP);
+
+        if (!Preferences.sharedInstance(this).getBoolean(Preferences.PREFERENCE_AUTOLOGIN, false)) {
+            Intent serverFind = new Intent(this, ServerFindActivity.class);
+            startActivityForResult(serverFind, RESULT_IP);
+        } else {
+           NetworkRequest.ip = Preferences.sharedInstance(this).getString(Preferences.PREFERENCE_IP, "");
+           NetworkRequest.port = Preferences.sharedInstance(this).getString(Preferences.PREFERENCE_PORT, "");
+           NetworkRequest.password = Preferences.sharedInstance(this).getString(Preferences.PREFERENCE_PASSWORD, "");
+        }
 
 
         Intent splashScreen = new Intent(this, SplashActivity.class);
@@ -150,10 +157,15 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             Intent preferences= new Intent(this, PreferencesActivity.class);
-            startActivity(preferences);
+            startActivityForResult(preferences, RESULT_PREFERNCES);
 
             return true;
         }
+         if(id == R.id.ic_action_socket_connection) {
+             if (!ConnectionStatus.sharedInstance().isWebSocketAvailable()) {
+                 connectionStart();
+             }
+         }
 
         return super.onOptionsItemSelected(item);
     }
@@ -197,7 +209,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             // Return a PlaceholderFragment (defined as a static inner class below).
             switch(position) {
                 case 0:
-                    return new KeyboardFragment();
+                    return new InputGridFragment();
                 case 1:
                     return new PSUtil();
                 case 2:
@@ -254,16 +266,20 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     public void update(Observable observable, Object data) {
         if (observable instanceof ConnectionStatus) {
             final ActionMenuItemView item = (ActionMenuItemView) findViewById(R.id.ic_action_socket_connection);
-            this.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    if (ConnectionStatus.sharedInstance().isWebSocketAvailable()) {
-                        item.setIcon(getResources().getDrawable(R.drawable.online));
-                    } else {
-                        item.setIcon(getResources().getDrawable(R.drawable.offline));
+            if (item != null) {
+                this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (ConnectionStatus.sharedInstance().isWebSocketAvailable()) {
+
+                            item.setIcon(getResources().getDrawable(R.drawable.online));
+                        } else {
+                            item.setIcon(getResources().getDrawable(R.drawable.offline));
+                        }
                     }
-                }
-            });
+                });
+            }
+
         }
 
 
@@ -292,35 +308,25 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == RESULT_IP) {
-            // Make sure the request was successful
-            if (resultCode == RESULT_OK) {
-                connectionStart();
-            }
+        switch (requestCode ) {
+            case RESULT_IP: {
+                if (resultCode == RESULT_OK) {
+                    connectionStart();
+                }
+            }break;
+
+            case RESULT_PREFERNCES: {
+                if (resultCode == PreferencesActivity.RESULT_RESTART) {
+                    Intent serverFind = new Intent(this, ServerFindActivity.class);
+                    startActivityForResult(serverFind, RESULT_IP);
+                }
+            }break;
+
         }
+
     }
 
-    @Override
-    public boolean dispatchKeyEvent(KeyEvent event) {
-        int action = event.getAction();
-        int keyCode = event.getKeyCode();
-        NetInput.SendKeycode(keyCode);
 
-        switch (keyCode) {
-            case KeyEvent.KEYCODE_VOLUME_UP:
-                if (action == KeyEvent.ACTION_DOWN) {
-                    NetInput.VolumeUp();
-                }
-                return true;
-            case KeyEvent.KEYCODE_VOLUME_DOWN:
-                if (action == KeyEvent.ACTION_DOWN) {
-                    NetInput.VolumeDown();
-                }
-                return true;
-            default:
-                return super.dispatchKeyEvent(event);
-        }
-    }
 
 
     public void requestAuthorizationToAddTorrent(String title,final Runnable onYesRunnable) {

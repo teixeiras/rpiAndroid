@@ -1,0 +1,123 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.github.dddpaul.netcat.ui.MainFragment">
+
+    <!-- Connect -->
+    <TextView
+        android:id="@+id/tv_connect"
+        android:text="@string/label_connect_to"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="5dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingTop="5dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        />
+
+    <AutoCompleteTextView
+        android:id="@+id/et_connect_to"
+        android:text=""
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_connect"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_toLeftOf="@+id/b_connect"
+        android:layout_toStartOf="@+id/b_connect"
+        />
+
+    <Button
+        android:id="@+id/b_connect"
+        android:text="@string/label_connect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:enabled="false"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="false"
+        android:layout_alignBottom="@+id/et_connect_to"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        />
+
+    <!-- Listen -->
+    <TextView
+        android:id="@+id/tv_listen"
+        android:text="@string/label_listen_on"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:paddingBottom="5dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingTop="5dp"
+        android:layout_below="@+id/b_connect"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        />
+
+    <EditText
+        android:id="@+id/et_listen_on"
+        android:text="@string/default_port"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_listen"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        />
+
+    <Button
+        android:id="@+id/b_listen"
+        android:text="@string/label_listen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="10dp"
+        android:enabled="false"
+        android:textStyle="bold"
+        android:layout_alignBottom="@+id/et_listen_on"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_toRightOf="@+id/et_connect_to"
+        android:layout_toEndOf="@+id/et_connect_to"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        />
+
+    <!-- TCP/UDP switch -->
+    <CheckBox
+        android:id="@+id/c_tcp_udp"
+        android:text="@string/label_tcp_udp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/et_listen_on"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="20dp"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        />
+
+    <TextView
+        android:id="@+id/tv_udp_tooltip"
+        android:text="@string/label_udp_tooltip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:layout_below="@+id/c_tcp_udp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:visibility="invisible"
+        />
+
+</RelativeLayout>

@@ -2,10 +2,13 @@ package com.pipplware.teixeiras.network;
 
 import android.util.Log;
 
+import com.google.common.base.Joiner;
+
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public final class NetInput {
@@ -19,18 +22,19 @@ public final class NetInput {
         List<NameValuePair> key = new ArrayList<>();
         key.add(new BasicNameValuePair("key", String.valueOf(KeyCode)));
         try {
-            NetworkRequest.service.sendMessage(NetworkService.KEY_SERVICE, key);
-        }catch (Exception e) {
+            if (NetworkRequest.service != null)
+                NetworkRequest.service.sendMessage(NetworkService.KEY_SERVICE, key);
+        } catch (Exception e) {
             Log.d("sd", e.getLocalizedMessage());
         }
 
     }
 
-   public static void SendKeySequence(String Sequence)
-    {
+    public static void SendKeySequence(String Sequence) {
         List<NameValuePair> key = new ArrayList<>();
         key.add(new BasicNameValuePair("sequence", Sequence));
-        NetworkRequest.service.sendMessage(NetworkService.KEY_SERVICE, key);
+        if (NetworkRequest.service != null)
+            NetworkRequest.service.sendMessage(NetworkService.KEY_SERVICE, key);
     }
 
     public static void MoveMouse(int X, int Y) {
@@ -38,14 +42,16 @@ public final class NetInput {
         key.add(new BasicNameValuePair("action", "move"));
         key.add(new BasicNameValuePair("X", String.valueOf(X)));
         key.add(new BasicNameValuePair("Y", String.valueOf(Y)));
-        NetworkRequest.service.sendMessage(NetworkService.MOUSE_SERVICE, key);
+        if (NetworkRequest.service != null)
+            NetworkRequest.service.sendMessage(NetworkService.MOUSE_SERVICE, key);
     }
 
     public static void LeftClick() {
         List<NameValuePair> key = new ArrayList<>();
         key.add(new BasicNameValuePair("command", String.valueOf(NetCommands.Mouse)));
         key.add(new BasicNameValuePair("button", String.valueOf(NetCommands.LeftClick)));
-        NetworkRequest.service.sendMessage(NetworkService.BUTTON_SERVICE, key);
+        if (NetworkRequest.service != null)
+            NetworkRequest.service.sendMessage(NetworkService.BUTTON_SERVICE, key);
 
     }
 
@@ -53,35 +59,40 @@ public final class NetInput {
         List<NameValuePair> key = new ArrayList<>();
         key.add(new BasicNameValuePair("command", String.valueOf(NetCommands.Mouse)));
         key.add(new BasicNameValuePair("button", String.valueOf(NetCommands.RightClick)));
-        NetworkRequest.service.sendMessage(NetworkService.BUTTON_SERVICE, key);
+        if (NetworkRequest.service != null)
+            NetworkRequest.service.sendMessage(NetworkService.BUTTON_SERVICE, key);
     }
 
     public static void LeftDown() {
         List<NameValuePair> key = new ArrayList<>();
         key.add(new BasicNameValuePair("command", String.valueOf(NetCommands.Mouse)));
         key.add(new BasicNameValuePair("button", String.valueOf(NetCommands.LeftDown)));
-        NetworkRequest.service.sendMessage(NetworkService.BUTTON_SERVICE, key);
+        if (NetworkRequest.service != null)
+            NetworkRequest.service.sendMessage(NetworkService.BUTTON_SERVICE, key);
     }
 
     public static void LeftUp() {
         List<NameValuePair> key = new ArrayList<>();
         key.add(new BasicNameValuePair("command", String.valueOf(NetCommands.Mouse)));
         key.add(new BasicNameValuePair("button", String.valueOf(NetCommands.LeftUp)));
-        NetworkRequest.service.sendMessage(NetworkService.BUTTON_SERVICE, key);
+        if (NetworkRequest.service != null)
+            NetworkRequest.service.sendMessage(NetworkService.BUTTON_SERVICE, key);
     }
 
     public static void RightDown() {
         List<NameValuePair> key = new ArrayList<>();
         key.add(new BasicNameValuePair("command", String.valueOf(NetCommands.Mouse)));
         key.add(new BasicNameValuePair("button", String.valueOf(NetCommands.RightDown)));
-        NetworkRequest.service.sendMessage(NetworkService.BUTTON_SERVICE, key);
+        if (NetworkRequest.service != null)
+            NetworkRequest.service.sendMessage(NetworkService.BUTTON_SERVICE, key);
     }
 
     public static void RightUp() {
         List<NameValuePair> key = new ArrayList<>();
         key.add(new BasicNameValuePair("command", String.valueOf(NetCommands.Mouse)));
         key.add(new BasicNameValuePair("button", String.valueOf(NetCommands.RightUp)));
-        NetworkRequest.service.sendMessage(NetworkService.BUTTON_SERVICE, key);
+        if (NetworkRequest.service != null)
+            NetworkRequest.service.sendMessage(NetworkService.BUTTON_SERVICE, key);
     }
 
     public static void MiddleDown() {
@@ -95,14 +106,16 @@ public final class NetInput {
         List<NameValuePair> key = new ArrayList<>();
         key.add(new BasicNameValuePair("command", String.valueOf(NetCommands.Mouse)));
         key.add(new BasicNameValuePair("button", String.valueOf(NetCommands.MiddleUp)));
-        NetworkRequest.service.sendMessage(NetworkService.BUTTON_SERVICE, key);
+        if (NetworkRequest.service != null)
+            NetworkRequest.service.sendMessage(NetworkService.BUTTON_SERVICE, key);
     }
 
     public static void ScrollDown() {
         List<NameValuePair> key = new ArrayList<>();
         key.add(new BasicNameValuePair("command", String.valueOf(NetCommands.Mouse)));
         key.add(new BasicNameValuePair("button", String.valueOf(NetCommands.ScrollDown)));
-        NetworkRequest.service.sendMessage(NetworkService.BUTTON_SERVICE, key);
+        if (NetworkRequest.service != null)
+            NetworkRequest.service.sendMessage(NetworkService.BUTTON_SERVICE, key);
 
     }
 
@@ -110,28 +123,44 @@ public final class NetInput {
         List<NameValuePair> key = new ArrayList<>();
         key.add(new BasicNameValuePair("command", String.valueOf(NetCommands.Mouse)));
         key.add(new BasicNameValuePair("button", String.valueOf(NetCommands.ScrollUp)));
-        NetworkRequest.service.sendMessage(NetworkService.BUTTON_SERVICE, key);
+        if (NetworkRequest.service != null)
+            NetworkRequest.service.sendMessage(NetworkService.BUTTON_SERVICE, key);
     }
 
     public static void VolumeDown() {
         List<NameValuePair> key = new ArrayList<>();
         key.add(new BasicNameValuePair("command", String.valueOf(NetCommands.Mixer)));
         key.add(new BasicNameValuePair("button", String.valueOf(NetCommands.VolumeDown)));
-        NetworkRequest.service.sendMessage(NetworkService.BUTTON_SERVICE, key);
+        if (NetworkRequest.service != null)
+            NetworkRequest.service.sendMessage(NetworkService.BUTTON_SERVICE, key);
     }
 
     public static void VolumeUp() {
         List<NameValuePair> key = new ArrayList<>();
         key.add(new BasicNameValuePair("command", String.valueOf(NetCommands.Mixer)));
         key.add(new BasicNameValuePair("button", String.valueOf(NetCommands.VolumeUp)));
-        NetworkRequest.service.sendMessage(NetworkService.BUTTON_SERVICE, key);
+        if (NetworkRequest.service != null)
+            NetworkRequest.service.sendMessage(NetworkService.BUTTON_SERVICE, key);
 
     }
 
-    private static void SendMessage(short Primary, short Secondary) {
+     public static void SendKeycode(List<Integer> keys) {
         List<NameValuePair> key = new ArrayList<>();
-        key.add(new BasicNameValuePair("key", String.valueOf(Primary)));
-        key.add(new BasicNameValuePair("secundary", String.valueOf(Secondary)));
-        NetworkRequest.service.sendMessage(NetworkService.KEY_SERVICE, key);
+
+        key.add(new BasicNameValuePair("key", Joiner.on(",").join(keys)));
+
+        if (NetworkRequest.service != null)
+            NetworkRequest.service.sendMessage(NetworkService.KEY_SERVICE, key);
+    }
+    public static void SendKeycode(char[] keys) {
+        List<NameValuePair> key = new ArrayList<>();
+        ArrayList<Integer> list = new ArrayList<Integer>();
+        for (char character : keys) {
+            list.add(new Integer(character));
+        }
+        key.add(new BasicNameValuePair("key", Joiner.on(",").join(list)));
+
+        if (NetworkRequest.service != null)
+            NetworkRequest.service.sendMessage(NetworkService.KEY_SERVICE, key);
     }
 }

@@ -11,6 +11,7 @@ public class Preferences {
     static String PREFERENCE_IP = "ip";
     static String PREFERENCE_PORT = "port";
     static String PREFERENCE_PASSWORD = "password";
+    static String PREFERENCE_AUTOLOGIN = "autologin";
 
 
     static SharedPreferences prefs;

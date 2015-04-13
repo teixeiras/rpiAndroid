@@ -1,5 +1,6 @@
 package com.pipplware.teixeiras.virtualkeypad;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
@@ -10,9 +11,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
+import android.widget.Button;
+
+import com.pipplware.teixeiras.network.NetworkRequest;
 
 
 public class PreferencesActivity extends ActionBarActivity {
+
+    public static final int RESULT_RESTART = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +67,23 @@ public class PreferencesActivity extends ActionBarActivity {
                                  Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_preferences, container, false);
             return rootView;
+        }
+
+        @Override
+        public void onResume() {
+            super.onResume();
+            Button button = (Button) this.getActivity().findViewById(R.id.logout);
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Preferences.sharedInstance(PlaceholderFragment.this.getActivity())
+                            .edit().remove(Preferences.PREFERENCE_AUTOLOGIN).apply();
+                    Intent returnIntent = new Intent();
+                    PlaceholderFragment.this.getActivity().setResult(RESULT_RESTART, returnIntent);
+                    PlaceholderFragment.this.getActivity().finish();
+
+                }
+            });
         }
     }
 }

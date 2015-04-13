@@ -186,6 +186,12 @@
             android:name=".PreferencesActivity"
             android:label="@string/title_activity_preferences" >
         </activity>
+        <activity
+            android:name=".keyboard.InputContainerActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_input_container"
+            android:theme="@android:style/Theme.Black.NoTitleBar" >
+        </activity>
     </application>
 
 </manifest>

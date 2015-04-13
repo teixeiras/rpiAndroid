@@ -55,5 +55,20 @@
     <string name="autologin">Autologin</string>
     <string name="title_activity_preferences">Preferences</string>
     <string name="ic_action_socket_connection">Websocket</string>
+    <string name="logout">Logout</string>
+
+    <string name="title_activity_input_container">InputContainerActivity</string>
+    <string name="buttonA">A</string>
+    <string name="buttonB">B</string>
+    <string name="buttonC">C</string>
+    <string name="buttonD">D</string>
+    <string name="buttonE">E</string>
+    <string name="buttonF">F</string>
+    <string name="buttonStart">Start</string>
+    <string name="buttonSelect">Select</string>
+    <string name="buttonUp">UP</string>
+    <string name="buttonDown">DOWN</string>
+    <string name="buttonRight">RIGHT</string>
+    <string name="buttonLeft">LEFT</string>
 
 </resources>

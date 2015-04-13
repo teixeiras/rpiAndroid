@@ -34,13 +34,15 @@ dependencies {
     compile project(':libraries:network')
 
 
+    compile('de.keyboardsurfer.android.widget:crouton:1.8.5@aar') {
+        exclude group: 'com.google.android', module: 'support-v4'
+    }
+    compile group: 'com.google.guava', name: 'guava', version: '18.0'
+
+
+
     compile 'com.android.support:appcompat-v7:22.0.0'
     compile 'org.achartengine:achartengine:1.2.0'
     compile 'com.michaelpardo:activeandroid:3.1.0-SNAPSHOT'
     compile 'com.android.support:support-v4:22.0.0'
-    compile('de.keyboardsurfer.android.widget:crouton:1.8.5@aar') {
-        exclude group: 'com.google.android', module: 'support-v4'
-    }
-
-
 }

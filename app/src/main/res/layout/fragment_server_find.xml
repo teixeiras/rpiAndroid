@@ -60,7 +60,7 @@
         </LinearLayout>
 
         <CheckBox
-            android:id="@+id/autlogin"
+            android:id="@+id/autologin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/autologin"
@@ -71,7 +71,7 @@
             android:id="@+id/manual_login_area"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/autlogin">
+            android:layout_below="@+id/autologin">
 
 
         <TextView

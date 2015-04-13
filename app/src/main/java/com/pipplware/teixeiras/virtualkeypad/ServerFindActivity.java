@@ -17,6 +17,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -55,9 +56,12 @@ public class ServerFindActivity extends FragmentActivity implements NDSService.C
 
     @Override
     public void couldConnectToRemoteServer(final String server, final String port) {
+        CheckBox box = (CheckBox)findViewById(R.id.autologin);
+
         Preferences.sharedInstance(this).edit().putString(Preferences.PREFERENCE_IP, server).apply();
         Preferences.sharedInstance(this).edit().putString(Preferences.PREFERENCE_PORT, port).apply();
         Preferences.sharedInstance(this).edit().putString(Preferences.PREFERENCE_PASSWORD, NetworkRequest.password).apply();
+        Preferences.sharedInstance(this).edit().putBoolean(Preferences.PREFERENCE_AUTOLOGIN, box.isSelected()).apply();
         runOnUiThread(new Runnable() {
             @Override
             public void run() {

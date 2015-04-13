@@ -33,20 +33,11 @@ public class RemoteKeyboardFragment extends Fragment{
 
     OnClickListener menuEvent = new OnClickListener() {
         public void onClick(View v) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(RemoteKeyboardFragment.this.getActivity());
-            builder.setTitle(R.string.app_name)
-                   .setItems(R.array.options, new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-                    switch(which) {
-                    case 0:
-                        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
-                        imm.showSoftInput(layout, InputMethodManager.SHOW_FORCED);
-                        break;
-                    }
-                }
-            });
-            builder.show();
+            InputMethodManager imm =
+                    (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
+            imm.showSoftInput(layout, InputMethodManager.SHOW_FORCED);
+
         }
     };
 
