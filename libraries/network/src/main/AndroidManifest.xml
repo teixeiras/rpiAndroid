@@ -5,11 +5,5 @@
         android:icon="@drawable/ic_launcher">
 
     </application>
-    <service
-        android:name="services.PSUtilService"
-        android:enabled="true"
-        android:exported="true" >
-    </service>
-    <service android:name="services.NDSService" />
 
 </manifest>

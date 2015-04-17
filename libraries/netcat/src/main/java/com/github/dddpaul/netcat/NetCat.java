@@ -100,10 +100,7 @@ public class NetCat implements NetCater
         protected void onProgressUpdate( String... values )
         {
             State state = State.valueOf( String.valueOf( values[0] ) );
-            EventBus.getDefault().post( new ActivityEvent( state ) );
-            if( values.length == 2 ) {
-                EventBus.getDefault().post( new FragmentEvent( HANDLE_RECEIVED_DATA, values[1] ));
-            }
+
         }
 
         @Override

@@ -192,6 +192,14 @@
             android:label="@string/title_activity_input_container"
             android:theme="@android:style/Theme.Black.NoTitleBar" >
         </activity>
+
+        <service
+            android:name="com.pipplware.teixeiras.services.PSUtilService"
+            android:enabled="true"
+            android:exported="true" >
+        </service>
+        <service android:name="com.pipplware.teixeiras.services.NDSService" />
+
     </application>
 
 </manifest>
