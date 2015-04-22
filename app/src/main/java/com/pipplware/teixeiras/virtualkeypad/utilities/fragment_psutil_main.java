@@ -1,4 +1,4 @@
-package com.pipplware.teixeiras.virtualkeypad.psutil;
+package com.pipplware.teixeiras.virtualkeypad.utilities;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -30,6 +30,7 @@ public class fragment_psutil_main extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+
 
         final Spinner spinner = (Spinner) this.getActivity().findViewById(R.id.command_selector);
 

@@ -93,6 +93,7 @@
     <orderEntry type="library" exported="" name="achartengine-1.2.0" level="project" />
     <orderEntry type="library" exported="" name="appcompat-v7-22.0.0" level="project" />
     <orderEntry type="library" exported="" name="crouton-1.8.5" level="project" />
+    <orderEntry type="library" exported="" name="split-pane-layout-1.0.0" level="project" />
     <orderEntry type="library" exported="" name="guava-18.0" level="project" />
     <orderEntry type="module" module-name="remote_keyboard" exported="" />
     <orderEntry type="module" module-name="network" exported="" />

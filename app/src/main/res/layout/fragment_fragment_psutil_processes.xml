@@ -1,7 +1,9 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.pipplware.teixeiras.virtualkeypad.psutil.fragment_psutil_main">
+    android:background="@color/background_material_light"
+
+    tools:context="com.pipplware.teixeiras.virtualkeypad.utilities.fragment_psutil_main">
 
         <ExpandableListView
             android:id="@+id/processList"

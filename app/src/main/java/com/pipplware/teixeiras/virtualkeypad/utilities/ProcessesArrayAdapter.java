@@ -1,4 +1,4 @@
-package com.pipplware.teixeiras.virtualkeypad.psutil;
+package com.pipplware.teixeiras.virtualkeypad.utilities;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -8,13 +8,11 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.pipplware.teixeiras.network.NetworkRequest;
 import com.pipplware.teixeiras.network.models.PS;
 import com.pipplware.teixeiras.virtualkeypad.R;
-
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -35,7 +33,7 @@ public class ProcessesArrayAdapter extends BaseExpandableListAdapter {
 
     public ProcessesArrayAdapter(Context con, ArrayList<PS.Process> processes) {
         super();
-        inflater = (LayoutInflater)con.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        inflater = (LayoutInflater) con.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.processes = processes;
     }
 
@@ -90,7 +88,7 @@ public class ProcessesArrayAdapter extends BaseExpandableListAdapter {
 
 
         holder.pid.setText(entry.getPid());
-        holder.memory.setText(entry.getMemory()+"%");
+        holder.memory.setText(entry.getMemory() + "%");
         holder.name.setText(entry.getName());
 
 
@@ -129,18 +127,17 @@ public class ProcessesArrayAdapter extends BaseExpandableListAdapter {
     }
 
 
-
     private ProcessHolder getProcessHolder(View workingView) {
         Object tag = workingView.getTag();
         ProcessHolder holder = null;
 
         if (tag == null || !(tag instanceof ProcessHolder)) {
             holder = new ProcessHolder();
-            holder.pid = (TextView)workingView.findViewById(R.id.pid);
-            holder.memory = (TextView)workingView.findViewById(R.id.memory);
-            holder.name = (TextView)workingView.findViewById(R.id.name);
+            holder.pid = (TextView) workingView.findViewById(R.id.pid);
+            holder.memory = (TextView) workingView.findViewById(R.id.memory);
+            holder.name = (TextView) workingView.findViewById(R.id.name);
 
-            holder.mainView = (LinearLayout)workingView.findViewById(R.id.row_mainview);
+            holder.mainView = (LinearLayout) workingView.findViewById(R.id.row_mainview);
 
             workingView.setTag(holder);
         } else {
@@ -156,7 +153,7 @@ public class ProcessesArrayAdapter extends BaseExpandableListAdapter {
 
         if (tag == null || !(tag instanceof ProcessHolder)) {
             holder = new ProcessDetailsHolder();
-            holder.kill = (Button)workingView.findViewById(R.id.kill_process);
+            holder.kill = (Button) workingView.findViewById(R.id.kill_process);
 
             workingView.setTag(holder);
         } else {
@@ -164,6 +161,18 @@ public class ProcessesArrayAdapter extends BaseExpandableListAdapter {
         }
 
         return holder;
+    }
+
+    public ArrayList<PS.Process> getProcesses() {
+        return processes;
+    }
+
+    public void setProcesses(ArrayList<PS.Process> processes) {
+        this.processes = processes;
+    }
+
+    public void setListView(ListView view) {
+        listView = view;
     }
 
     public static class ProcessHolder {
@@ -179,18 +188,6 @@ public class ProcessesArrayAdapter extends BaseExpandableListAdapter {
         public Button kill;
 
 
-
-    }
-    public ArrayList<PS.Process> getProcesses() {
-        return processes;
-    }
-
-    public void setProcesses(ArrayList<PS.Process> processes) {
-        this.processes = processes;
-    }
-
-    public void setListView(ListView view) {
-        listView = view;
     }
 
 

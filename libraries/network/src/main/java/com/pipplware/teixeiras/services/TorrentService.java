@@ -8,14 +8,8 @@ import android.util.Log;
 
 import com.pipplware.teixeiras.network.JSonRequest;
 import com.pipplware.teixeiras.network.NetworkRequest;
-import com.pipplware.teixeiras.network.models.PS;
 import com.pipplware.teixeiras.network.models.Torrents;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 

@@ -45,4 +45,6 @@ dependencies {
     compile 'org.achartengine:achartengine:1.2.0'
     compile 'com.michaelpardo:activeandroid:3.1.0-SNAPSHOT'
     compile 'com.android.support:support-v4:22.0.0'
+    compile 'com.mobidevelop.spl:split-pane-layout:1.0.0'
+
 }

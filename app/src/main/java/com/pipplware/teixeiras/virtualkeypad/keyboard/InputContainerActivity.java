@@ -1,30 +1,16 @@
 package com.pipplware.teixeiras.virtualkeypad.keyboard;
 
-import com.pipplware.teixeiras.network.NetInput;
-import com.pipplware.teixeiras.virtualkeypad.Preferences;
-import com.pipplware.teixeiras.virtualkeypad.keyboard.util.SystemUiHider;
-
-import android.annotation.TargetApi;
-import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
 
+import com.pipplware.teixeiras.network.NetInput;
 import com.pipplware.teixeiras.virtualkeypad.R;
+import com.pipplware.teixeiras.virtualkeypad.keyboard.util.SystemUiHider;
 import com.rekap.remote.RemoteKeyboardFragment;
 
 import java.util.ArrayList;

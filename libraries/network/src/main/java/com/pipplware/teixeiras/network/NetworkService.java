@@ -11,6 +11,8 @@ public interface NetworkService {
     public static String KEY_SERVICE = "key";
     public static String MOUSE_SERVICE = "mouse";
     public static String BUTTON_SERVICE = "button";
+    public static String GAMEPAD_SERVICE = "pad";
+
 
     public void sendMessage(String service, final List<NameValuePair> parameters);
 }

@@ -15,7 +15,6 @@ import java.nio.channels.ServerSocketChannel;
 import java.nio.channels.SocketChannel;
 
 import static com.github.dddpaul.netcat.NetCater.State.CONNECTED;
-import static com.github.dddpaul.netcat.NetCater.State.IDLE;
 import static com.github.dddpaul.netcat.NetCater.State.LISTENING;
 
 public class TcpNetCat extends NetCat

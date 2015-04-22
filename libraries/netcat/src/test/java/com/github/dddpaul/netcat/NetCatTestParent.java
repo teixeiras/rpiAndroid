@@ -15,12 +15,13 @@ import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
-import static com.github.dddpaul.netcat.NetCater.*;
 import static com.github.dddpaul.netcat.NetCater.Op.CONNECT;
 import static com.github.dddpaul.netcat.NetCater.Op.DISCONNECT;
 import static com.github.dddpaul.netcat.NetCater.Op.LISTEN;
 import static com.github.dddpaul.netcat.NetCater.Op.RECEIVE;
 import static com.github.dddpaul.netcat.NetCater.Op.SEND;
+import static com.github.dddpaul.netcat.NetCater.Proto;
+import static com.github.dddpaul.netcat.NetCater.Result;
 import static org.hamcrest.core.Is.is;
 
 public abstract class NetCatTestParent extends Assert

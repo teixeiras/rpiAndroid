@@ -17,10 +17,9 @@ import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowLog;
 import org.robolectric.shadows.ShadowToast;
 
-import static com.github.dddpaul.netcat.NetCater.*;
 import static com.github.dddpaul.netcat.NetCater.Op.CONNECT;
 import static com.github.dddpaul.netcat.NetCater.Op.LISTEN;
-import static org.fest.assertions.api.ANDROID.assertThat;
+import static com.github.dddpaul.netcat.NetCater.Proto;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.*;

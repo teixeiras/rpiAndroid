@@ -7,7 +7,6 @@
       <module fileurl="file://$PROJECT_DIR$/libraries/libraries.iml" filepath="$PROJECT_DIR$/libraries/libraries.iml" />
       <module fileurl="file://$PROJECT_DIR$/libraries/netcat/netcat.iml" filepath="$PROJECT_DIR$/libraries/netcat/netcat.iml" />
       <module fileurl="file://$PROJECT_DIR$/libraries/network/network.iml" filepath="$PROJECT_DIR$/libraries/network/network.iml" />
-      <module fileurl="file://$PROJECT_DIR$/network/network.iml" filepath="$PROJECT_DIR$/network/network.iml" />
       <module fileurl="file://$PROJECT_DIR$/libraries/remote_keyboard/remote_keyboard.iml" filepath="$PROJECT_DIR$/libraries/remote_keyboard/remote_keyboard.iml" />
     </modules>
   </component>

@@ -1,0 +1,70 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:spl="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/background_material_light"
+
+    >
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true">
+
+            </Button>
+        </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="3dip"
+        android:background="@drawable/splitter_bg_v">
+
+        </View>
+
+    <com.mobidevelop.spl.widget.SplitPaneLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        spl:orientation="horizontal"
+        spl:splitterSize="3dip"
+        spl:splitterPosition="33%"
+        spl:splitterBackground="@drawable/splitter_bg_h">
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+            <AutoCompleteTextView
+                android:id="@+id/searchView"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+
+                >
+
+            </AutoCompleteTextView>
+            <ListView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:text="packageList"
+                android:layout_below="@+id/searchView"
+                android:layout_alignParentBottom="true"
+
+                />
+        </RelativeLayout>
+
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"></Button>
+            </RelativeLayout>
+
+        </ScrollView>
+    </com.mobidevelop.spl.widget.SplitPaneLayout>
+ </LinearLayout>

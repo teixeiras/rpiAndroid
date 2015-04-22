@@ -6,8 +6,8 @@ import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
 
-import com.pipplware.teixeiras.network.NetworkRequest;
 import com.pipplware.teixeiras.network.JSonRequest;
+import com.pipplware.teixeiras.network.NetworkRequest;
 import com.pipplware.teixeiras.network.models.PS;
 
 import java.util.ArrayList;

@@ -6,7 +6,6 @@ import android.net.NetworkInfo;
 import android.util.Base64;
 import android.util.Log;
 
-
 import com.pipplware.teixeiras.network.models.Info;
 
 import org.apache.http.HttpResponse;
@@ -24,8 +23,6 @@ import org.apache.http.params.HttpParams;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.List;
 
 /**

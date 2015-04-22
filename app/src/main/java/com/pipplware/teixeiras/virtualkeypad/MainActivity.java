@@ -1,11 +1,9 @@
 package com.pipplware.teixeiras.virtualkeypad;
 
 import android.app.AlertDialog;
-import android.content.ClipData;
 import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.Network;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -18,35 +16,23 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.internal.view.menu.ActionMenuItemView;
 import android.util.Base64;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.pipplware.teixeiras.ConnectionStatus;
 import com.pipplware.teixeiras.network.JSonRequest;
 import com.pipplware.teixeiras.network.NetworkRequest;
-import com.pipplware.teixeiras.network.NetworkService;
 import com.pipplware.teixeiras.network.WebSocketService;
 import com.pipplware.teixeiras.network.models.Info;
-import com.pipplware.teixeiras.network.models.Torrents;
 import com.pipplware.teixeiras.virtualkeypad.keyboard.InputGridFragment;
-import com.pipplware.teixeiras.virtualkeypad.psutil.PSUtil;
 import com.pipplware.teixeiras.virtualkeypad.torrents.TorrentFragment;
-import com.pipplware.teixeiras.network.NetInput;
+import com.pipplware.teixeiras.virtualkeypad.utilities.UtilitiesGridFragment;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
 import org.apache.http.NameValuePair;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.impl.cookie.BasicClientCookie;
 import org.apache.http.message.BasicNameValuePair;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
@@ -54,16 +40,12 @@ import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.logging.Handler;
-
-import de.keyboardsurfer.android.widget.crouton.Crouton;
 
 
 public class MainActivity extends ActionBarActivity implements ActionBar.TabListener,
-        PSUtil.OnFragmentInteractionListener, TorrentFragment.OnFragmentInteractionListener,
+         TorrentFragment.OnFragmentInteractionListener,
         CreditsFragment.OnFragmentInteractionListener, JSonRequest.JSonRequestCallback<Info>,
         WebSocketService.Callback, Observer {
 
@@ -211,7 +193,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
                 case 0:
                     return new InputGridFragment();
                 case 1:
-                    return new PSUtil();
+                    return new UtilitiesGridFragment();
                 case 2:
                     return new TorrentFragment();
                 case 3:
@@ -244,7 +226,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.TabList
             return null;
         }
     }
-
 
     protected void connectionStart(){
         new Thread(new Runnable(){

@@ -2,7 +2,6 @@ package com.github.dddpaul.netcat;
 
 import java.io.Closeable;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.net.DatagramSocket;
 import java.net.Socket;
 

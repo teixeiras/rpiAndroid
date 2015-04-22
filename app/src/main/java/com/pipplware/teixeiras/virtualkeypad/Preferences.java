@@ -1,6 +1,5 @@
 package com.pipplware.teixeiras.virtualkeypad;
 
-import android.app.Application;
 import android.content.Context;
 import android.content.SharedPreferences;
 

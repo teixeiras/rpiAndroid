@@ -8,10 +8,55 @@ import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public final class NetInput {
+    public enum NetInputGamepad{
+        FRONT(0,1),
+        FRONT_RIGHT(1,1),
+        RIGHT(1,0),
+        RIGHT_BOTTOM(1,-1),
+        BOTTOM(0,-1),
+        BOTTOM_LEFT(-1,-1),
+        LEFT(-1,0),
+        LEFT_FRONT(-1,1);
+
+        private final int axisx;   // in kilograms
+        private final int axisy; // in meters
+
+        NetInputGamepad(int axisx, int axisy) {
+            this.axisx = axisx;
+            this.axisy = axisy;
+        }
+
+        public int getAxisx() {
+            return axisx;
+        }
+
+        public int getAxisy() {
+            return axisy;
+        }
+    };
+    public enum NetInputGamepadButton {
+        START(0),
+        SELECT(1),
+        A(2),
+        B(3),
+        C(4),
+        D(5),
+        E(6),
+        F(7);
+        private final int button;   // in kilograms
+
+
+        NetInputGamepadButton(int button) {
+            this.button = button;
+        }
+
+        public int getButton() {
+            return button;
+        }
+    }
     static NetInput netInput = new NetInput();
 
     public static NetInput getInstance() {
@@ -35,6 +80,20 @@ public final class NetInput {
         key.add(new BasicNameValuePair("sequence", Sequence));
         if (NetworkRequest.service != null)
             NetworkRequest.service.sendMessage(NetworkService.KEY_SERVICE, key);
+    }
+
+    public static void SendGamePadEvent(NetInputGamepad event) {
+        List<NameValuePair> key = new ArrayList<>();
+        key.add(new BasicNameValuePair("xaxis", ""+event.getAxisx()));
+        key.add(new BasicNameValuePair("yaxis", ""+event.getAxisy()));
+        if (NetworkRequest.service != null)
+            NetworkRequest.service.sendMessage(NetworkService.GAMEPAD_SERVICE, key);
+    }
+    public static void SendGamePadButtonEvent(NetInputGamepadButton event) {
+        List<NameValuePair> key = new ArrayList<>();
+        key.add(new BasicNameValuePair("button", ""+event.getButton()));
+        if (NetworkRequest.service != null)
+            NetworkRequest.service.sendMessage(NetworkService.GAMEPAD_SERVICE, key);
     }
 
     public static void MoveMouse(int X, int Y) {

@@ -3,13 +3,10 @@ package com.github.dddpaul.netcat;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import java.io.*;
-
-import de.greenrobot.event.EventBus;
-import events.ActivityEvent;
-import events.FragmentEvent;
-
-import static com.github.dddpaul.netcat.NetCater.Op.*;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 public class NetCat implements NetCater
 {

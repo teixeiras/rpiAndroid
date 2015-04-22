@@ -194,9 +194,7 @@
         </activity>
 
         <service
-            android:name="com.pipplware.teixeiras.services.PSUtilService"
-            android:enabled="true"
-            android:exported="true" >
+            android:name="com.pipplware.teixeiras.services.PSUtilService">
         </service>
         <service android:name="com.pipplware.teixeiras.services.NDSService" />
 

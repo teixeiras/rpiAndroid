@@ -1,6 +1,5 @@
 package com.pipplware.teixeiras.network;
 
-import android.os.Build;
 import android.util.Log;
 
 import com.pipplware.teixeiras.ConnectionStatus;
